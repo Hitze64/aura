@@ -3,12 +3,11 @@
     "ignore": [
         ".git",
         "node_modules/",
-        "dist/app",
-        "dist/lib",
+        "dist/",
         "coverage/",
         "LICENSE",
         "package.json",
-        "package-lock.json",
+        "yarn.lock",
         "README.md"
     ],
     "watch": ["./"],

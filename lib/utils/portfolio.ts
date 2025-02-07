@@ -1,10 +1,10 @@
 import {
     PortfolioForNetwork,
-    Strategy,
     StrategyRisk,
     ProcessAddressProps,
     LlmProcessProps,
-    AuraResponse_01
+    AuraResponse_01,
+    LlmProcessOutput
 } from '../types'
 
 import { networks } from 'ambire-common/dist/src/consts/networks'
@@ -63,7 +63,7 @@ export async function getPortfolioVelcroV3(address: string) {
     return output
 }
 
-export async function llmMockProcess({ portfolio }: LlmProcessProps): Promise<Strategy[] | null> {
+export async function llmMockProcess({ portfolio }: LlmProcessProps): Promise<LlmProcessOutput> {
     console.log({ portfolio })
     return [
         {

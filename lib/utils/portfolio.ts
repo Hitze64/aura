@@ -1,5 +1,5 @@
 import {
-    Portfolio,
+    PortfolioForNetwork,
     Strategy,
     StrategyRisk,
     ProcessAddressProps,
@@ -7,19 +7,60 @@ import {
     AuraResponse_01
 } from '../types'
 
-export async function getPortfolioVelcro(address: string) {
-    const resp = await fetch(`https://velcro.ambire.com/v2/balance/${address}/ethereum`)
-    if (resp.ok) {
-        const { data, error, success } = (await resp.json()) as Portfolio
+import { networks } from 'ambire-common/src/consts/networks'
+import { getRpcProvider } from 'ambire-common/src/services/provider/getRpcProvider'
+import { Portfolio } from 'ambire-common/src/libs/portfolio'
 
-        if (!success) {
-            throw new Error(`relayer call failed: ${error.message}`)
+export async function getPortfolioForNetwork(address: string, networkId: string) {
+    const network = networks.find((n: any) => n.id === networkId)
+    if (!network) throw new Error(`Failed to find ${networkId} in configured networks`)
+
+    const provider = getRpcProvider(network.rpcUrls, network.chainId)
+    const portfolio = new Portfolio(
+        fetch,
+        provider,
+        network,
+        'https://relayer.ambire.com/velcro-v3'
+    )
+
+    return portfolio.get(address, { baseCurrency: 'usd' })
+}
+
+export async function getPortfolioVelcroV3(address: string) {
+    const output: PortfolioForNetwork[] = []
+
+    const responses = await Promise.all(
+        networks.map((network) => getPortfolioForNetwork(address, network.id))
+    )
+
+    for (const resp of responses) {
+        const tokens = resp.tokens
+            .filter((t) => t.amount > 0n)
+            .map((t) => {
+                const balance = Number(t.amount) / Math.pow(10, t.decimals)
+                const priceUSD = (t.priceIn.find((p) => p.baseCurrency === 'usd') || { price: 0 })
+                    .price
+
+                return {
+                    symbol: t.symbol,
+                    balance,
+                    balanceUSD: balance * priceUSD,
+                    network: t.networkId,
+                    address: t.address
+                }
+            })
+
+        if (!tokens.length) {
+            continue
         }
 
-        return [{ data, error, success }]
-    } else {
-        throw new Error(`relayer call failed: ${resp.status}, ${resp.statusText}`)
+        output.push({
+            network: tokens[0].network,
+            tokens
+        })
     }
+
+    return output
 }
 
 export async function llmMockProcess({ portfolio }: LlmProcessProps): Promise<Strategy[] | null> {
@@ -66,7 +107,7 @@ export async function llmMockProcess({ portfolio }: LlmProcessProps): Promise<St
 export const processAddress = async (
     { address, getPortfolio, llmProcessor }: ProcessAddressProps = {
         address: '0x69bfD720Dd188B8BB04C4b4D24442D3c15576D10',
-        getPortfolio: getPortfolioVelcro,
+        getPortfolio: getPortfolioVelcroV3,
         llmProcessor: llmMockProcess
     }
 ): Promise<AuraResponse_01> => {

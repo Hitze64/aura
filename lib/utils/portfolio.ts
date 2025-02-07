@@ -7,9 +7,9 @@ import {
     AuraResponse_01
 } from '../types'
 
-import { networks } from 'ambire-common/src/consts/networks'
-import { getRpcProvider } from 'ambire-common/src/services/provider/getRpcProvider'
-import { Portfolio } from 'ambire-common/src/libs/portfolio'
+import { networks } from 'ambire-common/dist/src/consts/networks'
+import { getRpcProvider } from 'ambire-common/dist/src/services/provider/getRpcProvider'
+import { Portfolio } from 'ambire-common/dist/src/libs/portfolio'
 
 export async function getPortfolioForNetwork(address: string, networkId: string) {
     const network = networks.find((n: any) => n.id === networkId)

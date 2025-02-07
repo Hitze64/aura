@@ -42,6 +42,7 @@ export type ProcessAddressProps = {
 }
 
 export type AuraResponse_01 = {
+    address: string
     portfolio: Portfolio[]
     strategies: Strategy[] | null
 }

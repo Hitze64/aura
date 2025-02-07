@@ -74,6 +74,7 @@ export const processAddress = async (
     const strategies = await llmProcessor({ portfolio })
 
     return {
+        address,
         portfolio,
         strategies
     }

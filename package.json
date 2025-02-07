@@ -1,0 +1,38 @@
+{
+    "name": "aura",
+    "version": "0.0.1",
+    "main": "index.js",
+    "repository": "git@github.com:AmbireTech/aura.git",
+    "description": "Recommendation engine and onchain activity analyzer that leverages publicly available data from Ethereum and Layer 2 blockchains",
+    "scripts": {
+        "dev-start": "nodemon --config nodemon.json app/index.ts",
+        "build": "tsc",
+        "format:check": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "lint:check": "eslint .",
+        "lint:fix": "eslint --fix .",
+        "prepare": "husky"
+    },
+    "engines": {
+        "node": ">=22.13.0 <23",
+        "yarn": "~1.22",
+        "npm": "use-yarn"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3.2.0",
+        "@eslint/js": "^9.17.0",
+        "@types/express": "^5.0.0",
+        "@types/node": "^22.13.1",
+        "@typescript-eslint/eslint-plugin": "^8.19.1",
+        "@typescript-eslint/parser": "^8.19.1",
+        "eslint": "^9.17.0",
+        "eslint-config-prettier": "^9.1.0",
+        "globals": "^15.14.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^15.3.0",
+        "express": "^4.21.2",
+        "nodemon": "^3.1.9",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.7.3"
+    }
+}

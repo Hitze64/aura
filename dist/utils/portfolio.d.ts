@@ -1,16 +1,15 @@
-import { Strategy, ProcessAddressProps, LlmProcessProps, AuraResponse_01 } from '../types'
-export declare function getPortfolioVelcro(address: string): Promise<
-    {
-        data: {
-            tokens: import('../types').PortfolioToken[]
-            nfts: any
-            identity: string
-            network: string
-        }
-        error: Error
-        success: true
-    }[]
->
+import {
+    PortfolioForNetwork,
+    Strategy,
+    ProcessAddressProps,
+    LlmProcessProps,
+    AuraResponse_01
+} from '../types'
+export declare function getPortfolioForNetwork(
+    address: string,
+    networkId: string
+): Promise<import('ambire-common/dist/src/libs/portfolio/interfaces').PortfolioLibGetResult>
+export declare function getPortfolioVelcroV3(address: string): Promise<PortfolioForNetwork[]>
 export declare function llmMockProcess({ portfolio }: LlmProcessProps): Promise<Strategy[] | null>
 export declare const processAddress: ({
     address,

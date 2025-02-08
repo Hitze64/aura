@@ -1,11 +1,20 @@
 import express from 'express'
-import { processAddress } from '../lib/utils/portfolio'
+import { processAddress, getPortfolioVelcroV3 } from '../lib/utils/portfolio'
+import { askGemini } from '../lib/utils/geminiAI'
 
-const app = express()
 const port = 3420
 
-app.get('/', async (req, res) => {
-    const data = await processAddress()
+const app = express()
+
+app.use(express.json())
+
+app.post('/', async (req, res) => {
+    const { address } = req.body
+    const data = await processAddress({
+        address,
+        getPortfolio: getPortfolioVelcroV3,
+        llmProcessor: askGemini
+    })
     res.send(data)
 })
 

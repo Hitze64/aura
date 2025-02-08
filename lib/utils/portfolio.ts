@@ -4,6 +4,7 @@ import { networks } from 'ambire-common/dist/src/consts/networks'
 import { getRpcProvider } from 'ambire-common/dist/src/services/provider/getRpcProvider'
 import { Portfolio } from 'ambire-common/dist/src/libs/portfolio'
 import { llmMockProcess } from './mockedAI'
+import { simplePrompt } from './prompts'
 
 export async function getPortfolioForNetwork(address: string, networkId: string) {
     const network = networks.find((n: any) => n.id === networkId)
@@ -58,14 +59,16 @@ export async function getPortfolioVelcroV3(address: string) {
 }
 
 export const processAddress = async (
-    { address, getPortfolio, llmProcessor }: ProcessAddressProps = {
+    { address, getPortfolio, makePrompt, llmProcessor }: ProcessAddressProps = {
         address: '0x69bfD720Dd188B8BB04C4b4D24442D3c15576D10',
         getPortfolio: getPortfolioVelcroV3,
+        makePrompt: simplePrompt,
         llmProcessor: llmMockProcess
     }
 ): Promise<AuraResponse_01> => {
     const portfolio = await getPortfolio(address)
-    const strategies = await llmProcessor({ portfolio })
+    const prompt = await makePrompt(portfolio)
+    const strategies = await llmProcessor({ prompt })
 
     return {
         address,

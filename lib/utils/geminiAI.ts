@@ -56,7 +56,7 @@ const schema = {
 }
 
 export async function askGemini(llmInput: LlmProcessProps): Promise<LlmProcessOutput> {
-    const prompt = JSON.stringify(llmInput.portfolio)
+    const prompt = `Provide investment strategies for a user with the following crypto portfolio: ${JSON.stringify(llmInput.portfolio)}`
 
     try {
         const aiModel = genAI.getGenerativeModel({

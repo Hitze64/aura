@@ -37,9 +37,8 @@
         "typescript": "^5.7.3"
     },
     "dependencies": {
+        "ambire-common": "AmbireTech/ambire-common#3fca8cd4c2995d971e8ad0804d3661179a638c65",
         "@google/generative-ai": "^0.21.0",
-        "ambire-common": "AmbireTech/ambire-common#8a94608364cf51ac176b71c1c1958bf65670a2e4",
-        "ethereumjs-abi": "^0.6.8",
         "tslib": "^2.8.1"
     }
 }

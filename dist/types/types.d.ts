@@ -30,8 +30,11 @@ export type LlmProcessOutput = Strategy[] | null;
 export type ProcessAddressProps = {
     address: string;
     getPortfolio: (address: string) => Promise<PortfolioForNetwork[]>;
-    makePrompt: (portfolio: PortfolioForNetwork[]) => Promise<string>;
+    makePrompt: (props: PromptProps) => Promise<string>;
     llmProcessor: (props: LlmProcessProps) => Promise<Strategy[] | null>;
+};
+export type PromptProps = {
+    portfolio: PortfolioForNetwork[];
 };
 export type AuraResponse_01 = {
     address: string;

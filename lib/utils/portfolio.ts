@@ -67,7 +67,7 @@ export const processAddress = async (
     }
 ): Promise<AuraResponse_01> => {
     const portfolio = await getPortfolio(address)
-    const prompt = await makePrompt(portfolio)
+    const prompt = await makePrompt({ portfolio })
     const strategies = await llmProcessor({ prompt })
 
     return {

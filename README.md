@@ -1,6 +1,6 @@
 # AdEx AURA
 
-AdEx AURA is a recommendation engine and onchain activity analyzer that leverages publicly available data from Ethereum and Layer 2 blockchains. It processes the data through a large language model (LLM) to generate personalized recommendations for actions or applications based on user behavior. In simple terms, AdEx AURA looks at the users’ blockchain activity, e.g., where they’ve sent funds or what apps they’ve used, and suggests actions or services that might interest them based on that behavior.
+AdEx AURA is a personal AI agent framework and recommendation engine that leverages and analyzes publicly available data from Ethereum and Layer 2 blockchains. It processes the data through a large language model (LLM) to generate personalized recommendations for actions or applications based on user behavior. In simple terms, AdEx AURA looks at the users’ blockchain activity, e.g., where they’ve sent funds or what apps they’ve used, and suggests actions or services that might interest them based on that behavior.
 
 For initial context see this: https://www.adex.network/blog/introducing-adex-aura/
 

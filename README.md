@@ -38,10 +38,9 @@ Following this stage, we’ll start an ongoing training of our own AI model behi
 
 **v1.0: actionable recommendations**. At this stage, AURA will also output machine-readable instructions on how to execute each strategy for the particular account, for example: a transaction that provides liquidity on Curve, followed by a transaction that stakes the LP token somewhere.
 
-**v2.0:  personal AI agent.** At this stage, you can link AURA to your account and it would automatically perform some of the recommended strategies thanks to an account abstraction-based AI agent.
+**v2.0: personal AI agent.** At this stage, you can link AURA to your account and it would automatically perform some of the recommended strategies thanks to an account abstraction-based AI agent.
 
 **v3.0: detailed account analysis and more data sources.** At this stage, AURA will start doing deep analysis of the entire activity of your account to figure out your interests. Furthermore, it will start pull in data automatically from search engines, social media, and even the blockchain.
-
 
 ## FAQ
 
@@ -68,9 +67,10 @@ Yes! AURA will look for opportunities across all EVM chains it knows about where
 
 - Personal AI agent: AURA can be used as part of a personal AI agent that helps the user generate interest, yield or automatically claim airdrops.
 - Wallet UIs: wallets can use AURA as part of built-in web3 app catalogs, in order to pin apps that provide good opportunities, or even to curate said apps altogether. Furthermore it can be used in the homepage or dashboard, to directly offer suggestions that the user can act upon with a single click - this is especially possible in account abstraction wallets that support transaction batching.
-- Web3 apps: a good example of this is, a bridge can recommend you what to do with the funds you just bridged to the network, for example “Stake in *Aave fork name* for 5% yield”.
+- Web3 apps: a good example of this is, a bridge can recommend you what to do with the funds you just bridged to the network, for example “Stake in _Aave fork name_ for 5% yield”.
 
 ## License
+
 AURA is partially open source, with this repo under the GPL license.
 
 This repo contains the information fetcher, the LLM integrations and a basic prompt generator.

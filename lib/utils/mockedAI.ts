@@ -1,7 +1,7 @@
 import { LlmProcessProps, LlmProcessOutput, StrategyRisk } from '../types'
 
-export async function llmMockProcess({ portfolio }: LlmProcessProps): Promise<LlmProcessOutput> {
-    console.log({ portfolio })
+export async function llmMockProcess({ prompt }: LlmProcessProps): Promise<LlmProcessOutput> {
+    console.log({ prompt })
     return [
         {
             actions: [

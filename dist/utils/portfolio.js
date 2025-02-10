@@ -7,6 +7,7 @@ const networks_1 = require("ambire-common/dist/src/consts/networks");
 const getRpcProvider_1 = require("ambire-common/dist/src/services/provider/getRpcProvider");
 const portfolio_1 = require("ambire-common/dist/src/libs/portfolio");
 const mockedAI_1 = require("./mockedAI");
+const prompts_1 = require("./prompts");
 async function getPortfolioForNetwork(address, networkId) {
     const network = networks_1.networks.find((n) => n.id === networkId);
     if (!network)
@@ -43,13 +44,15 @@ async function getPortfolioVelcroV3(address) {
     }
     return output;
 }
-const processAddress = async ({ address, getPortfolio, llmProcessor } = {
+const processAddress = async ({ address, getPortfolio, makePrompt, llmProcessor } = {
     address: '0x69bfD720Dd188B8BB04C4b4D24442D3c15576D10',
     getPortfolio: getPortfolioVelcroV3,
+    makePrompt: prompts_1.simplePrompt,
     llmProcessor: mockedAI_1.llmMockProcess
 }) => {
     const portfolio = await getPortfolio(address);
-    const strategies = await llmProcessor({ portfolio });
+    const prompt = await makePrompt(portfolio);
+    const strategies = await llmProcessor({ prompt });
     return {
         address,
         portfolio,

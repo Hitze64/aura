@@ -52,7 +52,6 @@ const schema = {
     items: strategySchema
 };
 async function askGemini(llmInput) {
-    const prompt = `Provide investment strategies for a user with the following crypto portfolio: ${JSON.stringify(llmInput.portfolio)}`;
     try {
         const aiModel = genAI.getGenerativeModel({
             model: exports.GEMINI_MODELS.gemini20flashExp,
@@ -61,7 +60,7 @@ async function askGemini(llmInput) {
                 responseSchema: schema
             }
         });
-        const result = await aiModel.generateContent(prompt);
+        const result = await aiModel.generateContent(llmInput.prompt);
         // console.log(JSON.stringify(result))
         const content = result.response.text();
         try {

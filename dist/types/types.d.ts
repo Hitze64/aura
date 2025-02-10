@@ -24,12 +24,13 @@ export type Strategy = {
     actions: StrategyAction[];
 };
 export type LlmProcessProps = {
-    portfolio: PortfolioForNetwork[];
+    prompt: string;
 };
 export type LlmProcessOutput = Strategy[] | null;
 export type ProcessAddressProps = {
     address: string;
     getPortfolio: (address: string) => Promise<PortfolioForNetwork[]>;
+    makePrompt: (portfolio: PortfolioForNetwork[]) => Promise<string>;
     llmProcessor: (props: LlmProcessProps) => Promise<Strategy[] | null>;
 };
 export type AuraResponse_01 = {

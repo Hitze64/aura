@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.llmMockProcess = llmMockProcess;
 const types_1 = require("../types");
-async function llmMockProcess({ portfolio }) {
-    console.log({ portfolio });
+async function llmMockProcess({ prompt }) {
+    console.log({ prompt });
     return [
         {
             actions: [

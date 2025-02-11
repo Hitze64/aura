@@ -7,14 +7,14 @@ set -euo pipefail
 # Verify repo is clean
 # ==================================
  
-# List uncommitted changes and
-# check if the output is not empty
-# if [ -n "$(git status --porcelain)" ]; then
-#   # Print error message
-#   printf "\nError: repo has uncommitted changes\n\n"
-#   # Exit with error code
-#   exit 1
-# fi
+List uncommitted changes and
+check if the output is not empty
+if [ -n "$(git status --porcelain)" ]; then
+  # Print error message
+  printf "\nError: repo has uncommitted changes\n\n"
+  # Exit with error code
+  exit 1
+fi
  
 # ==================================
 # Get latest version from git tags
@@ -83,4 +83,4 @@ git commit -m "build: bump package.json version - v$VERSION_NEXT"
 git tag -a "v$VERSION_NEXT" -m "Release: v$VERSION_NEXT"
  
 # Optional: push commits and tag to remote 'main' branch
-git push origin main --follow-tags
+git push --follow-tags

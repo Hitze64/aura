@@ -5,7 +5,7 @@
     "repository": "git@github.com:AmbireTech/aura.git",
     "description": "Recommendation engine and onchain activity analyzer that leverages publicly available data from Ethereum and Layer 2 blockchains",
     "exports": {
-        ".": "./dist/index.js"
+        ".": "./dist/lib/index.js"
     },
     "scripts": {
         "dev-start": "nodemon --config nodemon.json app/index.ts",

@@ -1,6 +1,6 @@
 import express from 'express'
 import { processAddress, getPortfolioVelcroV3 } from '../lib/utils/portfolio'
-import { askGemini } from '../lib/utils/geminiAI'
+import { callGemini } from '../lib/utils/geminiAI'
 import { simplePrompt } from '../lib/utils/prompts'
 
 const port = 3420
@@ -15,7 +15,7 @@ app.post('/', async (req, res) => {
         address,
         getPortfolio: getPortfolioVelcroV3,
         makePrompt: simplePrompt,
-        llmProcessor: askGemini
+        llmProcessor: callGemini
     })
     res.send(data)
 })

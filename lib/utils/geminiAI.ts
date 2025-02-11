@@ -55,7 +55,7 @@ const schema = {
     items: strategySchema
 }
 
-export async function askGemini(llmInput: LlmProcessProps): Promise<LlmProcessOutput> {
+export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessOutput> {
     try {
         const aiModel = genAI.getGenerativeModel({
             model: llmInput.model || GEMINI_MODELS.gemini20flashExp,

@@ -60,23 +60,14 @@ else
   exit 1
 fi
  
-# ==================================
-# Update manifest file (optional)
-# assuming Rust project with Cargo.toml
-# modify this as needed for your project
-# ==================================
+yarn run build
  
-# Update version in Cargo.toml
-sed -i "s/^version = .*/version = \"$VERSION_NEXT\"/" Cargo.toml
- 
-# Update Cargo.lock as this changes when
-# updating the version in your manifest
-cargo generate-lockfile
+# Update version in package.json
+sed -i "s/\"version\": \".*\"/\"version\": \"$VERSION_NEXT\"/" package.json
  
 # Commit the changes
-yarn run build
 git add .
-git commit -m "build: bump Cargo.toml version - v$VERSION_NEXT"
+git commit -m "build: bump package.json version - v$VERSION_NEXT"
  
 # ==================================
 # Create git tag for new version

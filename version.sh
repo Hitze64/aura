@@ -85,5 +85,5 @@ git commit -m "build: bump package.json version - v$VERSION_NEXT"
 # Create an annotated tag
 git tag -a "v$VERSION_NEXT" -m "Release: v$VERSION_NEXT"
 
-# # Optional: push commits and tag to remote 'main' branch
-# git push --follow-tags
+# Optional: push commits and tag to remote 'main' branch
+git push --follow-tags

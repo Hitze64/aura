@@ -60,11 +60,14 @@ else
   exit 1
 fi
  
-yarn run build
+
  
 # Update version in package.json
 sed -i "s/\"version\": \".*\"/\"version\": \"$VERSION_NEXT\"/" package.json
  
+# Build dist 
+yarn run build
+
 # Commit the changes
 git add .
 git commit -m "build: bump package.json version - v$VERSION_NEXT"

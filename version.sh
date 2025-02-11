@@ -58,7 +58,7 @@ else
   exit 1
 fi
 
- printf "\nkorami---$VERSION_NEXT----kor--\n\n"
+printf "\nNext version: $VERSION_NEXT\n\n"
 
 # Update version in package.json
 OS="$(uname)"

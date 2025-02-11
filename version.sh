@@ -58,7 +58,14 @@ else
   exit 1
 fi
 
-printf "\nNext version: $VERSION_NEXT\n\n"
+printf "\nLatest build/tag version: v${GIT_TAG_LATEST}\n\n"
+read -p "Ready to make a new build with tag v${VERSION_NEXT} and push it to origin. Do you confirm? (y/n): " -n 1 -r CONFIRM
+if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+  printf "\nAborting...\n\n"
+  exit 1
+fi
+
+printf "\nProceeding with new build...\n\n"
 
 # Update version in package.json
 OS="$(uname)"

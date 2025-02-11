@@ -9,12 +9,12 @@ set -euo pipefail
  
 # List uncommitted changes and
 # check if the output is not empty
-if [ -n "$(git status --porcelain)" ]; then
-  # Print error message
-  printf "\nError: repo has uncommitted changes\n\n"
-  # Exit with error code
-  exit 1
-fi
+# if [ -n "$(git status --porcelain)" ]; then
+#   # Print error message
+#   printf "\nError: repo has uncommitted changes\n\n"
+#   # Exit with error code
+#   exit 1
+# fi
  
 # ==================================
 # Get latest version from git tags
@@ -61,9 +61,12 @@ else
 fi
  
 
+ printf "\nkorami---$VERSION_NEXT----kor--\n\n"
+
  
 # Update version in package.json
-sed -i "s/\"version\": \".*\"/\"version\": \"$VERSION_NEXT\"/" package.json
+
+sed -i "" -e "s/\"version\": \".*\"/\"version\": \"$VERSION_NEXT\"/g" package.json
  
 # Build dist 
 yarn run build

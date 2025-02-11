@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GEMINI_MODELS = void 0;
-exports.askGemini = askGemini;
+exports.callGemini = callGemini;
 const generative_ai_1 = require("@google/generative-ai");
 exports.GEMINI_MODELS = {
     // TODO: more pre-config models
@@ -51,10 +51,10 @@ const schema = {
     type: generative_ai_1.SchemaType.ARRAY,
     items: strategySchema
 };
-async function askGemini(llmInput) {
+async function callGemini(llmInput) {
     try {
         const aiModel = genAI.getGenerativeModel({
-            model: exports.GEMINI_MODELS.gemini20flashExp,
+            model: llmInput.model || exports.GEMINI_MODELS.gemini20flashExp,
             generationConfig: {
                 responseMimeType: 'application/json',
                 responseSchema: schema

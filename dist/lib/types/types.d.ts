@@ -25,6 +25,7 @@ export type Strategy = {
 };
 export type LlmProcessProps = {
     prompt: string;
+    model?: string;
 };
 export type LlmProcessOutput = Strategy[] | null;
 export type ProcessAddressProps = {

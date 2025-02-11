@@ -51,7 +51,7 @@ const processAddress = async ({ address, getPortfolio, makePrompt, llmProcessor 
     llmProcessor: mockedAI_1.llmMockProcess
 }) => {
     const portfolio = await getPortfolio(address);
-    const prompt = await makePrompt(portfolio);
+    const prompt = await makePrompt({ portfolio });
     const strategies = await llmProcessor({ prompt });
     return {
         address,

@@ -1,5 +1,15 @@
-import { NetworkPortfolioLibResponse, PortfolioLibToken } from '../../lib/types'
-import { getPortfolioForNetwork, getPortfolioVelcroV3 } from '../../lib/utils/portfolio'
+import {
+    NetworkPortfolioLibResponse,
+    PortfolioLibToken,
+    Strategy,
+    StrategyRisk
+} from '../../lib/types'
+import {
+    getPortfolioForNetwork,
+    getPortfolioVelcroV3,
+    processAddress
+} from '../../lib/utils/portfolio'
+import { simplePrompt } from '../../lib/utils/prompts'
 
 const TEST_WALLET = '0x69bfD720Dd188B8BB04C4b4D24442D3c15576D10'
 const USDC_PRICE = 0.99
@@ -20,6 +30,18 @@ const mockedNetworkPortfolioResult: NetworkPortfolioLibResponse = {
         }
     ]
 }
+const mockedStrategies: Strategy[] = [
+    {
+        actions: [
+            {
+                description: 'Example USDC strategy description',
+                tokens: 'USDC, ETH'
+            }
+        ],
+        name: 'Example USDC strategy name',
+        risk: StrategyRisk.LOW
+    }
+]
 
 jest.mock('ambire-common/dist/src/consts/networks', () => {
     const actual = jest.requireActual('ambire-common/dist/src/consts/networks')
@@ -52,6 +74,7 @@ describe('Portfolio unit tests', () => {
 
     test('should successfully get portfolio for address on all configured networks', async () => {
         const res = await getPortfolioVelcroV3(TEST_WALLET)
+
         expect(res).toHaveLength(1)
         expect(res[0]).toHaveProperty('network')
         expect(res[0]).toHaveProperty('tokens')
@@ -67,5 +90,20 @@ describe('Portfolio unit tests', () => {
             Number(mockedLibToken.amount) / Math.pow(10, mockedLibToken.decimals)
         expect(res[0].tokens[0].balance).toEqual(expectedBalance)
         expect(res[0].tokens[0].balanceUSD).toEqual(expectedBalance * USDC_PRICE)
+    })
+
+    test('should process address, get portfolio and return suggested strategies', async () => {
+        const res = await processAddress({
+            address: TEST_WALLET,
+            getPortfolio: getPortfolioVelcroV3,
+            makePrompt: simplePrompt,
+            llmProcessor: () => Promise.resolve(mockedStrategies)
+        })
+        expect(res).toHaveProperty('address')
+        expect(res).toHaveProperty('portfolio')
+        expect(res).toHaveProperty('strategies')
+        expect(res.address).toEqual(TEST_WALLET)
+        expect(res.portfolio).toHaveLength(1)
+        expect(res.strategies).toBe(mockedStrategies)
     })
 })

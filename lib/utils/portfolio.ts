@@ -21,7 +21,7 @@ export async function getPortfolioForNetwork(address: string, networkId: string)
     return portfolio.get(address, { baseCurrency: 'usd' })
 }
 
-export async function getPortfolioVelcroV3(address: string) {
+export async function getPortfolioVelcroV3(address: string): Promise<PortfolioForNetwork[]> {
     const output: PortfolioForNetwork[] = []
 
     const responses = await Promise.all(

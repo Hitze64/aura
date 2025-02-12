@@ -67,6 +67,7 @@ describe('Portfolio unit tests', () => {
 
     test('should successfully get portfolio for address on ethereum', async () => {
         const res = await getPortfolioForNetwork(TEST_WALLET, 'ethereum')
+
         expect(res).toHaveProperty('tokens')
         expect(res.tokens).toHaveLength(1)
         expect(res.tokens[0]).toBe<PortfolioLibToken>(mockedNetworkPortfolioResult.tokens[0])
@@ -99,6 +100,7 @@ describe('Portfolio unit tests', () => {
             makePrompt: simplePrompt,
             llmProcessor: () => Promise.resolve(mockedStrategies)
         })
+
         expect(res).toHaveProperty('address')
         expect(res).toHaveProperty('portfolio')
         expect(res).toHaveProperty('strategies')

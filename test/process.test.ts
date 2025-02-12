@@ -27,5 +27,7 @@ describe('Process address tests', () => {
         expect(res).toHaveProperty('address')
         expect(res).toHaveProperty('portfolio')
         expect(res).toHaveProperty('strategies')
+        // test fail of gh workflow
+        expect(1 > 2).toEqual(true)
     })
 })

@@ -1414,9 +1414,9 @@ ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ambire-common@AmbireTech/ambire-common#3fca8cd4c2995d971e8ad0804d3661179a638c65:
-  version "2.41.0"
-  resolved "https://codeload.github.com/AmbireTech/ambire-common/tar.gz/3fca8cd4c2995d971e8ad0804d3661179a638c65"
+"ambire-common@github:AmbireTech/ambire-common#677651a49c49cf49ff7864bd1bd6dc32b580c789":
+  version "2.44.0"
+  resolved "https://codeload.github.com/AmbireTech/ambire-common/tar.gz/677651a49c49cf49ff7864bd1bd6dc32b580c789"
   dependencies:
     aes-js "^3.1.2"
     dotenv "^16.3.1"

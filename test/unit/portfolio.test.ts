@@ -1,3 +1,4 @@
+import { EMPTY_PORTFOLIO_STRATEGIES } from '../../lib'
 import {
     NetworkPortfolioLibResponse,
     PortfolioLibToken,
@@ -107,5 +108,21 @@ describe('Portfolio unit tests', () => {
         expect(res.address).toEqual(TEST_WALLET)
         expect(res.portfolio).toHaveLength(1)
         expect(res.strategies).toBe(mockedStrategies)
+    })
+
+    test('should process address with empty portfolio and get hardcoded strategy for it', async () => {
+        const res = await processAddress({
+            address: TEST_WALLET,
+            getPortfolio: () => Promise.resolve([]),
+            makePrompt: simplePrompt,
+            llmProcessor: () => Promise.resolve(mockedStrategies)
+        })
+
+        expect(res).toHaveProperty('address')
+        expect(res).toHaveProperty('portfolio')
+        expect(res).toHaveProperty('strategies')
+        expect(res.address).toEqual(TEST_WALLET)
+        expect(res.portfolio).toHaveLength(0)
+        expect(res.strategies).toBe(EMPTY_PORTFOLIO_STRATEGIES)
     })
 })

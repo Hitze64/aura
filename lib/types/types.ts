@@ -49,7 +49,7 @@ export type ProcessAddressProps = {
     address: string
     getPortfolio: (address: string) => Promise<PortfolioForNetwork[]>
     makePrompt: (props: PromptProps) => Promise<string>
-    llmProcessor: (props: LlmProcessProps) => Promise<Strategy[] | null>
+    llmProcessor: (props: LlmProcessProps) => Promise<LlmProcessOutput>
 }
 
 export type PromptProps = {

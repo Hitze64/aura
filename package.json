@@ -14,7 +14,9 @@
         "format:fix": "prettier --write .",
         "lint:check": "eslint .",
         "lint:fix": "eslint --fix .",
-        "prepare": "husky"
+        "prepare": "husky",
+        "dev-test": "jest --verbose --detectOpenHandles",
+        "test": "jest --verbose --detectOpenHandles --silent"
     },
     "engines": {
         "node": ">=22.13.0 <23",
@@ -25,6 +27,7 @@
         "@eslint/eslintrc": "^3.2.0",
         "@eslint/js": "^9.17.0",
         "@types/express": "^5.0.0",
+        "@types/jest": "^29.5.14",
         "@types/node": "^22.13.1",
         "@typescript-eslint/eslint-plugin": "^8.19.1",
         "@typescript-eslint/parser": "^8.19.1",
@@ -33,15 +36,17 @@
         "express": "^4.21.2",
         "globals": "^15.14.0",
         "husky": "^9.1.7",
+        "jest": "^29.7.0",
         "lint-staged": "^15.3.0",
         "nodemon": "^3.1.9",
         "prettier": "^3.4.2",
+        "ts-jest": "^29.2.5",
         "ts-node": "^10.9.2",
         "typescript": "^5.7.3"
     },
     "dependencies": {
-        "ambire-common": "AmbireTech/ambire-common#3fca8cd4c2995d971e8ad0804d3661179a638c65",
         "@google/generative-ai": "^0.21.0",
+        "ambire-common": "github:AmbireTech/ambire-common#677651a49c49cf49ff7864bd1bd6dc32b580c789",
         "tslib": "^2.8.1"
     }
 }

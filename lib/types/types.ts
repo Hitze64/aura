@@ -1,3 +1,13 @@
+import { TokenResult } from 'ambire-common/dist/src/libs/portfolio/interfaces'
+
+export type PortfolioLibToken = Pick<
+    TokenResult,
+    'symbol' | 'address' | 'networkId' | 'decimals' | 'amount' | 'priceIn'
+>
+export type NetworkPortfolioLibResponse = {
+    tokens: PortfolioLibToken[]
+}
+
 export type PortfolioToken = {
     address: string
     balance: number
@@ -10,6 +20,7 @@ export type PortfolioForNetwork = {
     network: string
     tokens: PortfolioToken[]
 }
+
 export enum StrategyRisk {
     LOW = 'low',
     MEDIUM = 'medium',
@@ -38,7 +49,7 @@ export type ProcessAddressProps = {
     address: string
     getPortfolio: (address: string) => Promise<PortfolioForNetwork[]>
     makePrompt: (props: PromptProps) => Promise<string>
-    llmProcessor: (props: LlmProcessProps) => Promise<Strategy[] | null>
+    llmProcessor: (props: LlmProcessProps) => Promise<LlmProcessOutput>
 }
 
 export type PromptProps = {

@@ -1,12 +1,21 @@
-import { PortfolioForNetwork, ProcessAddressProps, AuraResponse_01 } from '../types'
+import {
+    PortfolioForNetwork,
+    ProcessAddressProps,
+    AuraResponse_01,
+    NetworkPortfolioLibResponse
+} from '../types'
 
 import { networks } from 'ambire-common/dist/src/consts/networks'
 import { getRpcProvider } from 'ambire-common/dist/src/services/provider/getRpcProvider'
 import { Portfolio } from 'ambire-common/dist/src/libs/portfolio'
 import { llmMockProcess } from './mockedAI'
 import { simplePrompt } from './prompts'
+import { EMPTY_PORTFOLIO_STRATEGIES } from '..'
 
-export async function getPortfolioForNetwork(address: string, networkId: string) {
+export async function getPortfolioForNetwork(
+    address: string,
+    networkId: string
+): Promise<NetworkPortfolioLibResponse> {
     const network = networks.find((n: any) => n.id === networkId)
     if (!network) throw new Error(`Failed to find ${networkId} in configured networks`)
 
@@ -21,7 +30,7 @@ export async function getPortfolioForNetwork(address: string, networkId: string)
     return portfolio.get(address, { baseCurrency: 'usd' })
 }
 
-export async function getPortfolioVelcroV3(address: string) {
+export async function getPortfolioVelcroV3(address: string): Promise<PortfolioForNetwork[]> {
     const output: PortfolioForNetwork[] = []
 
     const responses = await Promise.all(
@@ -67,6 +76,15 @@ export const processAddress = async (
     }
 ): Promise<AuraResponse_01> => {
     const portfolio = await getPortfolio(address)
+
+    if (!portfolio.length) {
+        return {
+            address,
+            portfolio,
+            strategies: EMPTY_PORTFOLIO_STRATEGIES
+        }
+    }
+
     const prompt = await makePrompt({ portfolio })
     const strategies = await llmProcessor({ prompt })
 

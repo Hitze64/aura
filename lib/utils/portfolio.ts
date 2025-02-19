@@ -10,6 +10,7 @@ import { getRpcProvider } from 'ambire-common/dist/src/services/provider/getRpcP
 import { Portfolio } from 'ambire-common/dist/src/libs/portfolio'
 import { llmMockProcess } from './mockedAI'
 import { simplePrompt } from './prompts'
+import { EMPTY_PORTFOLIO_STRATEGIES } from '..'
 
 export async function getPortfolioForNetwork(
     address: string,
@@ -75,6 +76,15 @@ export const processAddress = async (
     }
 ): Promise<AuraResponse_01> => {
     const portfolio = await getPortfolio(address)
+
+    if (!portfolio.length) {
+        return {
+            address,
+            portfolio,
+            strategies: EMPTY_PORTFOLIO_STRATEGIES
+        }
+    }
+
     const prompt = await makePrompt({ portfolio })
     const strategies = await llmProcessor({ prompt })
 

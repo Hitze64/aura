@@ -14,7 +14,14 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
     const completion = await apiClient.chat.completions.create({
         model: llmInput.model || XAI_MODELS.grok2latest,
         store: true,
-        messages: [{ role: 'user', content: llmInput.prompt }]
+        messages: [
+            {
+                role: 'system',
+                content:
+                    'You are an expert in cryptocurrencies, DeFi applications and their use cases. Return output in JSON format.'
+            },
+            { role: 'user', content: llmInput.prompt }
+        ]
     })
 
     const outputContent = completion.choices[0].message.content || '[]'

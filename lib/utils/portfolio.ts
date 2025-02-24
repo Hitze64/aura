@@ -11,6 +11,7 @@ import { Portfolio } from 'ambire-common/dist/src/libs/portfolio'
 import { llmMockProcess } from './mockedAI'
 import { simplePrompt } from './prompts'
 import { EMPTY_PORTFOLIO_STRATEGIES } from '..'
+import fetch from 'node-fetch'
 
 export async function getPortfolioForNetwork(
     address: string,

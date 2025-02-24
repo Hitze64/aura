@@ -23,7 +23,7 @@ jest.mock('openai', () => {
                         choices: [
                             {
                                 message: {
-                                    content: JSON.stringify(mockedStrategies)
+                                    content: JSON.stringify({ strategies: mockedStrategies })
                                 }
                             }
                         ]

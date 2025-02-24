@@ -1,7 +1,7 @@
 import OpenAI from 'openai'
-import { LlmProcessOutput, LlmProcessProps, Strategy } from 'aura'
 import { zodResponseFormat } from 'openai/helpers/zod'
 import { z } from 'zod'
+import { LlmProcessOutput, LlmProcessProps, Strategy } from '../types'
 
 export const XAI_MODELS = {
     grok2latest: 'grok-2-latest'

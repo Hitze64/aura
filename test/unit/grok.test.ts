@@ -1,5 +1,5 @@
 import { Strategy, StrategyRisk } from '../../lib/types'
-import { callGrok } from '../../lib/utils/grokAI'
+import { callGrok } from '../../lib/utils/llm/grok'
 
 const mockedStrategies: Strategy[] = [
     {

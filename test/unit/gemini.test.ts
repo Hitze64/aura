@@ -1,5 +1,5 @@
 import { Strategy, StrategyRisk } from '../../lib/types'
-import { callGemini } from '../../lib/utils/geminiAI'
+import { callGemini } from '../../lib/utils/llm/gemini'
 
 const mockedStrategies: Strategy[] = [
     {

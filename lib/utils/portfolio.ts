@@ -1,17 +1,16 @@
+import fetch from 'node-fetch'
+import { networks } from 'ambire-common/dist/src/consts/networks'
+import { getRpcProvider } from 'ambire-common/dist/src/services/provider/getRpcProvider'
+import { Portfolio } from 'ambire-common/dist/src/libs/portfolio'
+import { llmMockProcess } from './llm/mockedAI'
+import { simplePrompt } from './prompts'
+import { EMPTY_PORTFOLIO_STRATEGIES } from './strategies'
 import {
     PortfolioForNetwork,
     ProcessAddressProps,
     AuraResponse_01,
     NetworkPortfolioLibResponse
 } from '../types'
-
-import { networks } from 'ambire-common/dist/src/consts/networks'
-import { getRpcProvider } from 'ambire-common/dist/src/services/provider/getRpcProvider'
-import { Portfolio } from 'ambire-common/dist/src/libs/portfolio'
-import { llmMockProcess } from './mockedAI'
-import { simplePrompt } from './prompts'
-import { EMPTY_PORTFOLIO_STRATEGIES } from '..'
-import fetch from 'node-fetch'
 
 export async function getPortfolioForNetwork(
     address: string,

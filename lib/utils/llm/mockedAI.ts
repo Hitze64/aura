@@ -1,4 +1,4 @@
-import { LlmProcessProps, LlmProcessOutput, StrategyRisk } from '../types'
+import { LlmProcessProps, LlmProcessOutput, StrategyRisk } from '../../types'
 
 export async function llmMockProcess({ prompt }: LlmProcessProps): Promise<LlmProcessOutput> {
     console.log({ prompt })

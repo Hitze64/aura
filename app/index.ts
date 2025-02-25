@@ -1,6 +1,6 @@
 import express from 'express'
 import { processAddress, getPortfolioVelcroV3 } from '../lib/utils/portfolio'
-import { callGemini } from '../lib/utils/geminiAI'
+import { callGemini } from '../lib/utils/llm/gemini'
 import { simplePrompt } from '../lib/utils/prompts'
 import { LlmProcessOutput, LlmProcessProps, callGrok } from '../lib'
 

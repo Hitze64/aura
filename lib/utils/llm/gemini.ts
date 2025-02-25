@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI, Schema, SchemaType } from '@google/generative-ai'
-import { LlmProcessOutput, LlmProcessProps, Strategy } from '../types'
+import { LlmProcessOutput, LlmProcessProps, Strategy } from '../../types'
 
 export const GEMINI_MODELS = {
     // TODO: more pre-config models

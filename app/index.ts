@@ -2,7 +2,7 @@ import express from 'express'
 import { processAddress, getPortfolioVelcroV3 } from '../lib/utils/portfolio'
 import { callGemini } from '../lib/utils/llm/gemini'
 import { simplePrompt } from '../lib/utils/prompts'
-import { LlmProcessOutput, LlmProcessProps, callGrok } from '../lib'
+import { LlmProcessOutput, LlmProcessProps, callGrok, llmMockProcess } from '../lib'
 
 const port = 3420
 
@@ -23,7 +23,7 @@ app.post('/', async (req, res) => {
         address,
         getPortfolio: getPortfolioVelcroV3,
         makePrompt: simplePrompt,
-        llmProcessor: llmChoices[llm] || callGemini
+        llmProcessor: llmChoices[llm] || llmMockProcess
     })
     res.send(data)
 })

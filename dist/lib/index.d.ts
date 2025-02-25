@@ -1,7 +1,8 @@
 export * from './types';
 export * from './utils/portfolio';
-export * from './utils/mockedAI';
-export * from './utils/geminiAI';
+export * from './utils/llm/mockedAI';
+export * from './utils/llm/gemini';
+export * from './utils/llm/grok';
 export * from './utils/prompts';
 export * from './utils/strategies';
 //# sourceMappingURL=index.d.ts.map

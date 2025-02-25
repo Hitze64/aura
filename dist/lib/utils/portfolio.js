@@ -3,18 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.processAddress = void 0;
 exports.getPortfolioForNetwork = getPortfolioForNetwork;
 exports.getPortfolioVelcroV3 = getPortfolioVelcroV3;
+const tslib_1 = require("tslib");
+const node_fetch_1 = tslib_1.__importDefault(require("node-fetch"));
 const networks_1 = require("ambire-common/dist/src/consts/networks");
 const getRpcProvider_1 = require("ambire-common/dist/src/services/provider/getRpcProvider");
 const portfolio_1 = require("ambire-common/dist/src/libs/portfolio");
-const mockedAI_1 = require("./mockedAI");
+const mockedAI_1 = require("./llm/mockedAI");
 const prompts_1 = require("./prompts");
-const __1 = require("..");
+const strategies_1 = require("./strategies");
 async function getPortfolioForNetwork(address, networkId) {
     const network = networks_1.networks.find((n) => n.id === networkId);
     if (!network)
         throw new Error(`Failed to find ${networkId} in configured networks`);
     const provider = (0, getRpcProvider_1.getRpcProvider)(network.rpcUrls, network.chainId);
-    const portfolio = new portfolio_1.Portfolio(fetch, provider, network, 'https://relayer.ambire.com/velcro-v3');
+    const portfolio = new portfolio_1.Portfolio(node_fetch_1.default, provider, network, 'https://relayer.ambire.com/velcro-v3');
     return portfolio.get(address, { baseCurrency: 'usd' });
 }
 async function getPortfolioVelcroV3(address) {
@@ -56,7 +58,7 @@ const processAddress = async ({ address, getPortfolio, makePrompt, llmProcessor 
         return {
             address,
             portfolio,
-            strategies: __1.EMPTY_PORTFOLIO_STRATEGIES
+            strategies: strategies_1.EMPTY_PORTFOLIO_STRATEGIES
         };
     }
     const prompt = await makePrompt({ portfolio });

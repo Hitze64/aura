@@ -13,8 +13,11 @@ const apiClient = new OpenAI({
 })
 
 export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOutput> {
+    let output = null
+    const model = llmInput.model || XAI_MODELS.grok2latest
+
     const completion = await apiClient.chat.completions.create({
-        model: llmInput.model || XAI_MODELS.grok2latest,
+        model,
         store: true,
         messages: [
             {
@@ -31,9 +34,16 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
 
     try {
         const parsed = JSON.parse(outputContent) as { strategies: Strategy[] }
-        return parsed.strategies || []
+        output = parsed.strategies || []
     } catch (error) {
         console.error('Invalid JSON in Grok output: ', error)
-        return null
+    }
+
+    return {
+        llm: {
+            provider: 'xAI',
+            model
+        },
+        response: output
     }
 }

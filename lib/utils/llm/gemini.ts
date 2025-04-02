@@ -56,9 +56,12 @@ const schema = {
 }
 
 export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessOutput> {
+    let output = null
+    const model = llmInput.model || GEMINI_MODELS.gemini20flashExp
+
     try {
         const aiModel = genAI.getGenerativeModel({
-            model: llmInput.model || GEMINI_MODELS.gemini20flashExp,
+            model,
             generationConfig: {
                 responseMimeType: 'application/json',
                 responseSchema: schema
@@ -70,13 +73,19 @@ export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessO
         const content = result.response.text()
 
         try {
-            return JSON.parse(content || '[]') as Strategy[]
+            output = JSON.parse(content || '[]') as Strategy[]
         } catch (error) {
             console.error('Invalid JSON in Gemini AI output: ', error)
-            return null
         }
     } catch (error) {
         console.error(`Error querying Gemini AI: ${error}`)
-        return null
+    }
+
+    return {
+        llm: {
+            provider: 'Google',
+            model
+        },
+        response: output
     }
 }

@@ -16,25 +16,30 @@ const apiClient = new openai_1.default({
 async function callGrok(llmInput) {
     let output = null;
     const model = llmInput.model || exports.XAI_MODELS.grok2latest;
-    const completion = await apiClient.chat.completions.create({
-        model,
-        store: true,
-        messages: [
-            {
-                role: 'system',
-                content: 'You are an expert in cryptocurrencies, DeFi applications and their use cases. Return output in JSON format.'
-            },
-            { role: 'user', content: llmInput.prompt }
-        ],
-        response_format: (0, zod_1.zodResponseFormat)(zod_2.StrategiesZodSchema, 'strategies')
-    });
-    const outputContent = completion.choices[0].message.content || '{}';
     try {
-        const parsed = JSON.parse(outputContent);
-        output = parsed.strategies || [];
+        const completion = await apiClient.chat.completions.create({
+            model,
+            store: true,
+            messages: [
+                {
+                    role: 'system',
+                    content: 'You are an expert in cryptocurrencies, DeFi applications and their use cases. Return output in JSON format.'
+                },
+                { role: 'user', content: llmInput.prompt }
+            ],
+            response_format: (0, zod_1.zodResponseFormat)(zod_2.StrategiesZodSchema, 'strategies')
+        });
+        const outputContent = completion.choices[0].message.content || '{}';
+        try {
+            const parsed = JSON.parse(outputContent);
+            output = parsed.strategies || [];
+        }
+        catch (error) {
+            console.error('Invalid JSON in Grok output: ', error);
+        }
     }
     catch (error) {
-        console.error('Invalid JSON in Grok output: ', error);
+        console.error(`Error querying Grok: ${error}`);
     }
     return {
         llm: {

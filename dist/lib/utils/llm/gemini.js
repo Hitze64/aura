@@ -52,9 +52,11 @@ const schema = {
     items: strategySchema
 };
 async function callGemini(llmInput) {
+    let output = null;
+    const model = llmInput.model || exports.GEMINI_MODELS.gemini20flashExp;
     try {
         const aiModel = genAI.getGenerativeModel({
-            model: llmInput.model || exports.GEMINI_MODELS.gemini20flashExp,
+            model,
             generationConfig: {
                 responseMimeType: 'application/json',
                 responseSchema: schema
@@ -64,16 +66,21 @@ async function callGemini(llmInput) {
         // console.log(JSON.stringify(result))
         const content = result.response.text();
         try {
-            return JSON.parse(content || '[]');
+            output = JSON.parse(content || '[]');
         }
         catch (error) {
             console.error('Invalid JSON in Gemini AI output: ', error);
-            return null;
         }
     }
     catch (error) {
         console.error(`Error querying Gemini AI: ${error}`);
-        return null;
     }
+    return {
+        llm: {
+            provider: 'Google',
+            model
+        },
+        response: output
+    };
 }
 //# sourceMappingURL=gemini.js.map

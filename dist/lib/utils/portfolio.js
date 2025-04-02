@@ -58,7 +58,15 @@ const processAddress = async ({ address, getPortfolio, makePrompt, llmProcessor 
         return {
             address,
             portfolio,
-            strategies: strategies_1.EMPTY_PORTFOLIO_STRATEGIES
+            strategies: [
+                {
+                    llm: {
+                        provider: 'local',
+                        model: 'local'
+                    },
+                    response: strategies_1.EMPTY_PORTFOLIO_STRATEGIES
+                }
+            ]
         };
     }
     const prompt = await makePrompt({ portfolio });
@@ -66,7 +74,7 @@ const processAddress = async ({ address, getPortfolio, makePrompt, llmProcessor 
     return {
         address,
         portfolio,
-        strategies
+        strategies: [strategies]
     };
 };
 exports.processAddress = processAddress;

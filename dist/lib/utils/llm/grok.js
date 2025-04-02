@@ -14,8 +14,10 @@ const apiClient = new openai_1.default({
     baseURL: 'https://api.x.ai/v1'
 });
 async function callGrok(llmInput) {
+    let output = null;
+    const model = llmInput.model || exports.XAI_MODELS.grok2latest;
     const completion = await apiClient.chat.completions.create({
-        model: llmInput.model || exports.XAI_MODELS.grok2latest,
+        model,
         store: true,
         messages: [
             {
@@ -29,11 +31,17 @@ async function callGrok(llmInput) {
     const outputContent = completion.choices[0].message.content || '{}';
     try {
         const parsed = JSON.parse(outputContent);
-        return parsed.strategies || [];
+        output = parsed.strategies || [];
     }
     catch (error) {
         console.error('Invalid JSON in Grok output: ', error);
-        return null;
     }
+    return {
+        llm: {
+            provider: 'xAI',
+            model
+        },
+        response: output
+    };
 }
 //# sourceMappingURL=grok.js.map

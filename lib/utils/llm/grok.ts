@@ -16,27 +16,31 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
     let output = null
     const model = llmInput.model || XAI_MODELS.grok2latest
 
-    const completion = await apiClient.chat.completions.create({
-        model,
-        store: true,
-        messages: [
-            {
-                role: 'system',
-                content:
-                    'You are an expert in cryptocurrencies, DeFi applications and their use cases. Return output in JSON format.'
-            },
-            { role: 'user', content: llmInput.prompt }
-        ],
-        response_format: zodResponseFormat(StrategiesZodSchema, 'strategies')
-    })
-
-    const outputContent = completion.choices[0].message.content || '{}'
-
     try {
-        const parsed = JSON.parse(outputContent) as { strategies: Strategy[] }
-        output = parsed.strategies || []
+        const completion = await apiClient.chat.completions.create({
+            model,
+            store: true,
+            messages: [
+                {
+                    role: 'system',
+                    content:
+                        'You are an expert in cryptocurrencies, DeFi applications and their use cases. Return output in JSON format.'
+                },
+                { role: 'user', content: llmInput.prompt }
+            ],
+            response_format: zodResponseFormat(StrategiesZodSchema, 'strategies')
+        })
+
+        const outputContent = completion.choices[0].message.content || '{}'
+
+        try {
+            const parsed = JSON.parse(outputContent) as { strategies: Strategy[] }
+            output = parsed.strategies || []
+        } catch (error) {
+            console.error('Invalid JSON in Grok output: ', error)
+        }
     } catch (error) {
-        console.error('Invalid JSON in Grok output: ', error)
+        console.error(`Error querying Grok: ${error}`)
     }
 
     return {

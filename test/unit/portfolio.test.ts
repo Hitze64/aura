@@ -1,8 +1,8 @@
 import { EMPTY_PORTFOLIO_STRATEGIES } from '../../lib'
 import {
+    LlmProcessOutput,
     NetworkPortfolioLibResponse,
     PortfolioLibToken,
-    Strategy,
     StrategyRisk
 } from '../../lib/types'
 import {
@@ -31,18 +31,24 @@ const mockedNetworkPortfolioResult: NetworkPortfolioLibResponse = {
         }
     ]
 }
-const mockedStrategies: Strategy[] = [
-    {
-        actions: [
-            {
-                description: 'Example USDC strategy description',
-                tokens: 'USDC, ETH'
-            }
-        ],
-        name: 'Example USDC strategy name',
-        risk: StrategyRisk.LOW
-    }
-]
+const mockedLlmOutput: LlmProcessOutput = {
+    llm: {
+        provider: 'mock',
+        model: 'mock'
+    },
+    response: [
+        {
+            actions: [
+                {
+                    description: 'Example USDC strategy description',
+                    tokens: 'USDC, ETH'
+                }
+            ],
+            name: 'Example USDC strategy name',
+            risk: StrategyRisk.LOW
+        }
+    ]
+}
 
 jest.mock('ambire-common/dist/src/consts/networks', () => {
     const actual = jest.requireActual('ambire-common/dist/src/consts/networks')
@@ -99,7 +105,7 @@ describe('Portfolio unit tests', () => {
             address: TEST_WALLET,
             getPortfolio: getPortfolioVelcroV3,
             makePrompt: simplePrompt,
-            llmProcessor: () => Promise.resolve(mockedStrategies)
+            llmProcessor: () => Promise.resolve(mockedLlmOutput)
         })
 
         expect(res).toHaveProperty('address')
@@ -107,7 +113,8 @@ describe('Portfolio unit tests', () => {
         expect(res).toHaveProperty('strategies')
         expect(res.address).toEqual(TEST_WALLET)
         expect(res.portfolio).toHaveLength(1)
-        expect(res.strategies).toBe(mockedStrategies)
+        expect(res.strategies).toHaveLength(1)
+        expect(res.strategies[0]).toBe(mockedLlmOutput)
     })
 
     test('should process address with empty portfolio and get hardcoded strategy for it', async () => {
@@ -115,7 +122,7 @@ describe('Portfolio unit tests', () => {
             address: TEST_WALLET,
             getPortfolio: () => Promise.resolve([]),
             makePrompt: simplePrompt,
-            llmProcessor: () => Promise.resolve(mockedStrategies)
+            llmProcessor: () => Promise.resolve(mockedLlmOutput)
         })
 
         expect(res).toHaveProperty('address')
@@ -123,6 +130,7 @@ describe('Portfolio unit tests', () => {
         expect(res).toHaveProperty('strategies')
         expect(res.address).toEqual(TEST_WALLET)
         expect(res.portfolio).toHaveLength(0)
-        expect(res.strategies).toBe(EMPTY_PORTFOLIO_STRATEGIES)
+        expect(res.strategies).toHaveLength(1)
+        expect(res.strategies[0].response).toBe(EMPTY_PORTFOLIO_STRATEGIES)
     })
 })

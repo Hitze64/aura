@@ -81,7 +81,15 @@ export const processAddress = async (
         return {
             address,
             portfolio,
-            strategies: EMPTY_PORTFOLIO_STRATEGIES
+            strategies: [
+                {
+                    llm: {
+                        provider: 'local',
+                        model: 'local'
+                    },
+                    response: EMPTY_PORTFOLIO_STRATEGIES
+                }
+            ]
         }
     }
 
@@ -91,6 +99,6 @@ export const processAddress = async (
     return {
         address,
         portfolio,
-        strategies
+        strategies: [strategies]
     }
 }

@@ -38,10 +38,11 @@ describe('Grok unit tests', () => {
         const res = await callGrok({ prompt: 'text prompt' })
 
         expect(res).not.toBe(null)
-        expect(res).toHaveLength(1)
+        expect(res).toHaveProperty('response')
+        expect(res.response).toHaveLength(1)
 
         const expectedStrategy = mockedStrategies[0]
-        const strategy = (res as Strategy[])[0]
+        const strategy = (res.response as Strategy[])[0]
         expect(strategy.name).toEqual(expectedStrategy.name)
         expect(strategy.risk).toEqual(expectedStrategy.risk)
         expect(strategy.actions.length).toEqual(expectedStrategy.actions.length)

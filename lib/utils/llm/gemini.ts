@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI, Schema, SchemaType } from '@google/generative-ai'
 import { LlmProcessOutput, LlmProcessProps, Strategy } from '../../types'
+import { stringifyError } from '../errors'
 
 export const GEMINI_MODELS = {
     // TODO: more pre-config models
@@ -57,6 +58,7 @@ const schema = {
 
 export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessOutput> {
     let output = null
+    let error = null
     const model = llmInput.model || GEMINI_MODELS.gemini20flashExp
 
     try {
@@ -74,10 +76,12 @@ export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessO
 
         try {
             output = JSON.parse(content || '[]') as Strategy[]
-        } catch (error) {
-            console.error('Invalid JSON in Gemini AI output: ', error)
+        } catch (err) {
+            error = stringifyError(err)
+            console.error(`Invalid JSON in Gemini AI output: ${error}`)
         }
-    } catch (error) {
+    } catch (err) {
+        error = stringifyError(err)
         console.error(`Error querying Gemini AI: ${error}`)
     }
 
@@ -86,6 +90,7 @@ export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessO
             provider: 'Google',
             model
         },
-        response: output
+        response: output,
+        error
     }
 }

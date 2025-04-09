@@ -2,6 +2,7 @@ import OpenAI from 'openai'
 import { zodResponseFormat } from 'openai/helpers/zod'
 import { LlmProcessOutput, LlmProcessProps, Strategy } from '../../types'
 import { StrategiesZodSchema } from './structures/zod'
+import { stringifyError } from '../errors'
 
 export const XAI_MODELS = {
     grok2latest: 'grok-2-latest'
@@ -14,6 +15,7 @@ const apiClient = new OpenAI({
 
 export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOutput> {
     let output = null
+    let error = null
     const model = llmInput.model || XAI_MODELS.grok2latest
 
     try {
@@ -36,10 +38,12 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
         try {
             const parsed = JSON.parse(outputContent) as { strategies: Strategy[] }
             output = parsed.strategies || []
-        } catch (error) {
-            console.error('Invalid JSON in Grok output: ', error)
+        } catch (err) {
+            error = stringifyError(err)
+            console.error(`Invalid JSON in Grok output: ${error}`)
         }
-    } catch (error) {
+    } catch (err) {
+        error = stringifyError(err)
         console.error(`Error querying Grok: ${error}`)
     }
 
@@ -48,6 +52,7 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
             provider: 'xAI',
             model
         },
-        response: output
+        response: output,
+        error
     }
 }

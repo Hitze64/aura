@@ -6,6 +6,7 @@ const tslib_1 = require("tslib");
 const openai_1 = tslib_1.__importDefault(require("openai"));
 const zod_1 = require("openai/helpers/zod");
 const zod_2 = require("./structures/zod");
+const errors_1 = require("../errors");
 exports.XAI_MODELS = {
     grok2latest: 'grok-2-latest'
 };
@@ -15,6 +16,7 @@ const apiClient = new openai_1.default({
 });
 async function callGrok(llmInput) {
     let output = null;
+    let error = null;
     const model = llmInput.model || exports.XAI_MODELS.grok2latest;
     try {
         const completion = await apiClient.chat.completions.create({
@@ -34,11 +36,13 @@ async function callGrok(llmInput) {
             const parsed = JSON.parse(outputContent);
             output = parsed.strategies || [];
         }
-        catch (error) {
-            console.error('Invalid JSON in Grok output: ', error);
+        catch (err) {
+            error = (0, errors_1.stringifyError)(err);
+            console.error(`Invalid JSON in Grok output: ${error}`);
         }
     }
-    catch (error) {
+    catch (err) {
+        error = (0, errors_1.stringifyError)(err);
         console.error(`Error querying Grok: ${error}`);
     }
     return {
@@ -46,7 +50,8 @@ async function callGrok(llmInput) {
             provider: 'xAI',
             model
         },
-        response: output
+        response: output,
+        error
     };
 }
 //# sourceMappingURL=grok.js.map

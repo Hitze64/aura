@@ -6,4 +6,5 @@ export * from './utils/llm/grok';
 export * from './utils/llm/structures/zod';
 export * from './utils/prompts';
 export * from './utils/strategies';
+export * from './utils/errors';
 //# sourceMappingURL=index.d.ts.map

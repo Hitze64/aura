@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GEMINI_MODELS = void 0;
 exports.callGemini = callGemini;
 const generative_ai_1 = require("@google/generative-ai");
+const errors_1 = require("../errors");
 exports.GEMINI_MODELS = {
     // TODO: more pre-config models
     gemini20flashExp: 'gemini-2.0-flash-exp'
@@ -53,6 +54,7 @@ const schema = {
 };
 async function callGemini(llmInput) {
     let output = null;
+    let error = null;
     const model = llmInput.model || exports.GEMINI_MODELS.gemini20flashExp;
     try {
         const aiModel = genAI.getGenerativeModel({
@@ -68,11 +70,13 @@ async function callGemini(llmInput) {
         try {
             output = JSON.parse(content || '[]');
         }
-        catch (error) {
-            console.error('Invalid JSON in Gemini AI output: ', error);
+        catch (err) {
+            error = (0, errors_1.stringifyError)(err);
+            console.error(`Invalid JSON in Gemini AI output: ${error}`);
         }
     }
-    catch (error) {
+    catch (err) {
+        error = (0, errors_1.stringifyError)(err);
         console.error(`Error querying Gemini AI: ${error}`);
     }
     return {
@@ -80,7 +84,8 @@ async function callGemini(llmInput) {
             provider: 'Google',
             model
         },
-        response: output
+        response: output,
+        error
     };
 }
 //# sourceMappingURL=gemini.js.map

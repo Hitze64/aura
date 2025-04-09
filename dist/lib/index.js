@@ -9,4 +9,5 @@ tslib_1.__exportStar(require("./utils/llm/grok"), exports);
 tslib_1.__exportStar(require("./utils/llm/structures/zod"), exports);
 tslib_1.__exportStar(require("./utils/prompts"), exports);
 tslib_1.__exportStar(require("./utils/strategies"), exports);
+tslib_1.__exportStar(require("./utils/errors"), exports);
 //# sourceMappingURL=index.js.map

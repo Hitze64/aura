@@ -38,6 +38,7 @@ export type LlmProcessOutput = {
         model: string;
     };
     response: Strategy[] | null;
+    error?: string | null;
 };
 export type ProcessAddressProps = {
     address: string;

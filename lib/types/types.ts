@@ -23,8 +23,9 @@ export type PortfolioForNetwork = {
 
 export enum StrategyRisk {
     LOW = 'low',
-    MEDIUM = 'medium',
-    HIGH = 'high'
+    MODERATE = 'moderate',
+    HIGH = 'high',
+    OPPORTUNISTIC = 'opportunistic'
 }
 
 export type StrategyAction = {

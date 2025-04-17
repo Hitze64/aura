@@ -12,7 +12,9 @@ export const ActionZodSchema = z.object({
 
 export const StrategyZodSchema = z.object({
     name: z.string({ description: 'Name of the strategy' }),
-    risk: z.enum(['low', 'medium', 'high'], { description: 'Risk level of the strategy' }),
+    risk: z.enum(['low', 'moderate', 'high', 'opportunistic'], {
+        description: 'Risk level of the strategy'
+    }),
     actions: z.array(ActionZodSchema, { description: 'List of actions for the strategy' })
 })
 

@@ -29,7 +29,7 @@ export async function llmMockProcess({ prompt }: LlmProcessProps): Promise<LlmPr
                     }
                 ],
                 name: 'DEX Liquidity Provision',
-                risk: StrategyRisk.MEDIUM
+                risk: StrategyRisk.MODERATE
             },
             {
                 actions: [

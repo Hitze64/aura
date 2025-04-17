@@ -11,7 +11,7 @@ export declare const ActionZodSchema: z.ZodObject<{
 }>;
 export declare const StrategyZodSchema: z.ZodObject<{
     name: z.ZodString;
-    risk: z.ZodEnum<["low", "medium", "high"]>;
+    risk: z.ZodEnum<["low", "moderate", "high", "opportunistic"]>;
     actions: z.ZodArray<z.ZodObject<{
         tokens: z.ZodString;
         description: z.ZodString;
@@ -24,14 +24,14 @@ export declare const StrategyZodSchema: z.ZodObject<{
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
     name: string;
-    risk: "low" | "medium" | "high";
+    risk: "low" | "moderate" | "high" | "opportunistic";
     actions: {
         tokens: string;
         description: string;
     }[];
 }, {
     name: string;
-    risk: "low" | "medium" | "high";
+    risk: "low" | "moderate" | "high" | "opportunistic";
     actions: {
         tokens: string;
         description: string;
@@ -40,7 +40,7 @@ export declare const StrategyZodSchema: z.ZodObject<{
 export declare const StrategiesZodSchema: z.ZodObject<{
     strategies: z.ZodArray<z.ZodObject<{
         name: z.ZodString;
-        risk: z.ZodEnum<["low", "medium", "high"]>;
+        risk: z.ZodEnum<["low", "moderate", "high", "opportunistic"]>;
         actions: z.ZodArray<z.ZodObject<{
             tokens: z.ZodString;
             description: z.ZodString;
@@ -53,14 +53,14 @@ export declare const StrategiesZodSchema: z.ZodObject<{
         }>, "many">;
     }, "strip", z.ZodTypeAny, {
         name: string;
-        risk: "low" | "medium" | "high";
+        risk: "low" | "moderate" | "high" | "opportunistic";
         actions: {
             tokens: string;
             description: string;
         }[];
     }, {
         name: string;
-        risk: "low" | "medium" | "high";
+        risk: "low" | "moderate" | "high" | "opportunistic";
         actions: {
             tokens: string;
             description: string;
@@ -69,7 +69,7 @@ export declare const StrategiesZodSchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     strategies: {
         name: string;
-        risk: "low" | "medium" | "high";
+        risk: "low" | "moderate" | "high" | "opportunistic";
         actions: {
             tokens: string;
             description: string;
@@ -78,7 +78,7 @@ export declare const StrategiesZodSchema: z.ZodObject<{
 }, {
     strategies: {
         name: string;
-        risk: "low" | "medium" | "high";
+        risk: "low" | "moderate" | "high" | "opportunistic";
         actions: {
             tokens: string;
             description: string;

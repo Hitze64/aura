@@ -37,7 +37,7 @@ const strategySchema = {
             type: generative_ai_1.SchemaType.STRING,
             description: 'Risk level of the strategy',
             nullable: false,
-            enum: ['low', 'medium', 'high']
+            enum: ['low', 'moderate', 'high', 'opportunistic']
         },
         actions: {
             description: 'List of actions for the strategy',

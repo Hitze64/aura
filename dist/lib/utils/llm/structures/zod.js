@@ -12,7 +12,9 @@ exports.ActionZodSchema = zod_1.z.object({
 });
 exports.StrategyZodSchema = zod_1.z.object({
     name: zod_1.z.string({ description: 'Name of the strategy' }),
-    risk: zod_1.z.enum(['low', 'medium', 'high'], { description: 'Risk level of the strategy' }),
+    risk: zod_1.z.enum(['low', 'moderate', 'high', 'opportunistic'], {
+        description: 'Risk level of the strategy'
+    }),
     actions: zod_1.z.array(exports.ActionZodSchema, { description: 'List of actions for the strategy' })
 });
 exports.StrategiesZodSchema = zod_1.z.object({

@@ -30,7 +30,7 @@ async function llmMockProcess({ prompt }) {
                     }
                 ],
                 name: 'DEX Liquidity Provision',
-                risk: types_1.StrategyRisk.MEDIUM
+                risk: types_1.StrategyRisk.MODERATE
             },
             {
                 actions: [

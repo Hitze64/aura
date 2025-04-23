@@ -3,8 +3,8 @@ import { LlmProcessOutput, LlmProcessProps, Strategy } from '../../types'
 import { stringifyError } from '../errors'
 
 export const GEMINI_MODELS = {
-    // TODO: more pre-config models
-    gemini20flashExp: 'gemini-2.0-flash-exp'
+    gemini20flashExp: 'gemini-2.0-flash-exp',
+    gemini25proPreview: 'gemini-2.5-pro-preview-03-25'
 }
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY || '')

@@ -5,7 +5,8 @@ import { StrategiesZodSchema } from './structures/zod'
 import { stringifyError } from '../errors'
 
 export const XAI_MODELS = {
-    grok2latest: 'grok-2-latest'
+    grok2latest: 'grok-2-latest',
+    grok3latest: 'grok-3-latest'
 }
 
 const apiClient = new OpenAI({
@@ -16,7 +17,7 @@ const apiClient = new OpenAI({
 export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOutput> {
     let output = null
     let error = null
-    const model = llmInput.model || XAI_MODELS.grok2latest
+    const model = llmInput.model || XAI_MODELS.grok3latest
 
     try {
         const completion = await apiClient.chat.completions.create({

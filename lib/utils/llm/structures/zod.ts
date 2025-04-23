@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { ACTION_OPERATION_TYPES, RISK_TYPES } from './common'
 
 export const ActionZodSchema = z.object({
     tokens: z.string({
@@ -23,21 +24,9 @@ export const ActionZodSchema = z.object({
                 'The name of the blockchain network(s) which the action is to be executed on'
         }
     ),
-    operations: z.array(
-        z.enum(
-            [
-                'staking',
-                'lending',
-                'borrowing',
-                'liquidity provision',
-                'yield farming',
-                'governance farming',
-                'bridging'
-            ],
-            { description: 'DeFi operation type' }
-        ),
-        { description: 'The DeFi operation type(s) used of the action' }
-    ),
+    operations: z.array(z.enum(ACTION_OPERATION_TYPES, { description: 'DeFi operation type' }), {
+        description: 'The DeFi operation type(s) used of the action'
+    }),
     apy: z.string({
         description:
             'The annual yield that can be expected from this action. Example values: 3%, 5%, 8-10%'
@@ -46,7 +35,7 @@ export const ActionZodSchema = z.object({
 
 export const StrategyZodSchema = z.object({
     name: z.string({ description: 'Name of the strategy' }),
-    risk: z.enum(['low', 'moderate', 'high', 'opportunistic'], {
+    risk: z.enum(RISK_TYPES, {
         description: 'Risk level of the strategy'
     }),
     actions: z.array(ActionZodSchema, { description: 'List of actions for the strategy' })

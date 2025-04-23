@@ -23,6 +23,10 @@ export declare enum StrategyRisk {
 export type StrategyAction = {
     tokens: string;
     description: string;
+    platforms?: string[];
+    networks?: string[];
+    operations?: string[];
+    apy?: string;
 };
 export type Strategy = {
     name: string;

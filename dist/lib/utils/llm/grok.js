@@ -8,7 +8,8 @@ const zod_1 = require("openai/helpers/zod");
 const zod_2 = require("./structures/zod");
 const errors_1 = require("../errors");
 exports.XAI_MODELS = {
-    grok2latest: 'grok-2-latest'
+    grok2latest: 'grok-2-latest',
+    grok3latest: 'grok-3-latest'
 };
 const apiClient = new openai_1.default({
     apiKey: process.env.X_AI_API_KEY || '',
@@ -17,7 +18,7 @@ const apiClient = new openai_1.default({
 async function callGrok(llmInput) {
     let output = null;
     let error = null;
-    const model = llmInput.model || exports.XAI_MODELS.grok2latest;
+    const model = llmInput.model || exports.XAI_MODELS.grok3latest;
     try {
         const completion = await apiClient.chat.completions.create({
             model,

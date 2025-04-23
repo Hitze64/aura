@@ -1,60 +1,14 @@
-import { GoogleGenerativeAI, Schema, SchemaType } from '@google/generative-ai'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import { LlmProcessOutput, LlmProcessProps, Strategy } from '../../types'
 import { stringifyError } from '../errors'
+import { StrategiesGoogleSchema } from './structures/google'
 
 export const GEMINI_MODELS = {
-    // TODO: more pre-config models
-    gemini20flashExp: 'gemini-2.0-flash-exp'
+    gemini20flashExp: 'gemini-2.0-flash-exp',
+    gemini25proPreview: 'gemini-2.5-pro-preview-03-25'
 }
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY || '')
-
-const actionSchema: Schema = {
-    type: SchemaType.OBJECT,
-    properties: {
-        tokens: {
-            type: SchemaType.STRING,
-            description:
-                'Comma-separated list of symbols of the involved tokens, for example: USDC, ETH',
-            nullable: false
-        },
-        description: {
-            type: SchemaType.STRING,
-            description: 'Free text describing the action',
-            nullable: false
-        }
-    },
-    required: ['tokens', 'description']
-}
-
-const strategySchema: Schema = {
-    type: SchemaType.OBJECT,
-    properties: {
-        name: {
-            type: SchemaType.STRING,
-            description: 'Name of the strategy',
-            nullable: false
-        },
-        risk: {
-            type: SchemaType.STRING,
-            description: 'Risk level of the strategy',
-            nullable: false,
-            enum: ['low', 'moderate', 'high', 'opportunistic']
-        },
-        actions: {
-            description: 'List of actions for the strategy',
-            type: SchemaType.ARRAY,
-            items: actionSchema
-        }
-    },
-    required: ['name', 'risk', 'actions']
-}
-
-const schema = {
-    description: 'List of strategies',
-    type: SchemaType.ARRAY,
-    items: strategySchema
-}
 
 export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessOutput> {
     let output = null
@@ -66,7 +20,7 @@ export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessO
             model,
             generationConfig: {
                 responseMimeType: 'application/json',
-                responseSchema: schema
+                responseSchema: StrategiesGoogleSchema
             }
         })
         const result = await aiModel.generateContent(llmInput.prompt)

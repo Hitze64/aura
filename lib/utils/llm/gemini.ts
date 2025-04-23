@@ -22,6 +22,49 @@ const actionSchema: Schema = {
             type: SchemaType.STRING,
             description: 'Free text describing the action',
             nullable: false
+        },
+        platforms: {
+            type: SchemaType.ARRAY,
+            description: 'The DeFi platform(s) which is to be used for the action',
+            items: {
+                type: SchemaType.STRING,
+                description: 'DeFi platform name',
+                nullable: false
+            }
+        },
+        networks: {
+            type: SchemaType.ARRAY,
+            description:
+                'The name of the blockchain network(s) which the action is to be executed on',
+            items: {
+                type: SchemaType.STRING,
+                description: 'Lower-cased name of blockchain network',
+                nullable: false
+            }
+        },
+        operations: {
+            type: SchemaType.ARRAY,
+            description: 'The DeFi operation type(s) used of the action',
+            items: {
+                type: SchemaType.STRING,
+                description: 'DeFi operation type',
+                nullable: false,
+                enum: [
+                    'staking',
+                    'lending',
+                    'borrowing',
+                    'liquidity provision',
+                    'yield farming',
+                    'governance farming',
+                    'bridging'
+                ]
+            }
+        },
+        apy: {
+            type: SchemaType.STRING,
+            description:
+                'The annual yield that can be expected from this action. Example values: 3%, 5%, 8-10%',
+            nullable: false
         }
     },
     required: ['tokens', 'description']

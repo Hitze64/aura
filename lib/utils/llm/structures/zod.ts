@@ -7,6 +7,40 @@ export const ActionZodSchema = z.object({
     }),
     description: z.string({
         description: 'Free text describing the action concerning the related tokens'
+    }),
+    platforms: z.array(
+        z.string({
+            description: 'DeFi platform name'
+        }),
+        { description: 'The DeFi platform(s) which is to be used for the action' }
+    ),
+    networks: z.array(
+        z.string({
+            description: 'Lower-cased name of blockchain network'
+        }),
+        {
+            description:
+                'The name of the blockchain network(s) which the action is to be executed on'
+        }
+    ),
+    operations: z.array(
+        z.enum(
+            [
+                'staking',
+                'lending',
+                'borrowing',
+                'liquidity provision',
+                'yield farming',
+                'governance farming',
+                'bridging'
+            ],
+            { description: 'DeFi operation type' }
+        ),
+        { description: 'The DeFi operation type(s) used of the action' }
+    ),
+    apy: z.string({
+        description:
+            'The annual yield that can be expected from this action. Example values: 3%, 5%, 8-10%'
     })
 })
 

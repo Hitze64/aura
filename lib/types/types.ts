@@ -46,6 +46,7 @@ export type Strategy = {
 export type LlmProcessProps = {
     prompt: string
     model?: string
+    llmOptionsOverride?: { [x: string]: any }
 }
 
 export type LlmProcessOutput = {
@@ -62,6 +63,8 @@ export type ProcessAddressProps = {
     getPortfolio: (address: string) => Promise<PortfolioForNetwork[]>
     makePrompt: (props: PromptProps) => Promise<string>
     llmProcessor: (props: LlmProcessProps) => Promise<LlmProcessOutput>
+    model?: string
+    llmOptionsOverride?: any
 }
 
 export type PromptProps = {

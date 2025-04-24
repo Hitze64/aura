@@ -31,7 +31,8 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
                 },
                 { role: 'user', content: llmInput.prompt }
             ],
-            response_format: zodResponseFormat(StrategiesZodSchema, 'strategies')
+            response_format: zodResponseFormat(StrategiesZodSchema, 'strategies'),
+            ...llmInput.llmOptionsOverride
         })
 
         const outputContent = completion.choices[0].message.content || '{}'

@@ -12,6 +12,54 @@ import {
     NetworkPortfolioLibResponse
 } from '../types'
 
+// import { z } from 'zod'
+// import { ACTION_OPERATION_TYPES, RISK_TYPES } from '..'
+// import { zodResponseFormat } from 'openai/helpers/zod'
+
+//  const ActionZodSchema = z.object({
+//     tokens: z.string({
+//         description:
+//             'Comma-separated list of symbols of the involved crypto currencies or tokens, for example: USDC, ETH'
+//     }),
+//     description: z.string({
+//         description: 'Free text describing the action concerning the related tokens, the platform to use and expected APY'
+//     }),
+//     platforms: z.array(
+//         z.string({
+//             description: 'DeFi platform name'
+//         }),
+//         { description: 'The DeFi platform(s) which is to be used for the action' }
+//     ),
+//     networks: z.array(
+//         z.string({
+//             description: 'Lower-cased name of blockchain network'
+//         }),
+//         {
+//             description:
+//                 'The name of the blockchain network(s) which the action is to be executed on'
+//         }
+//     ),
+//     operations: z.array(z.enum(ACTION_OPERATION_TYPES, { description: 'DeFi operation type' }), {
+//         description: 'The DeFi operation type(s) used of the action'
+//     }),
+//     apy: z.string({
+//         description:
+//             'The annual yield that can be expected from this action. Example values: 3%, 5%, 8-10%'
+//     })
+// })
+
+//  const StrategyZodSchema = z.object({
+//     name: z.string({ description: 'Name of the strategy' }),
+//     risk: z.enum(RISK_TYPES, {
+//         description: 'Risk level of the strategy'
+//     }),
+//     actions: z.array(ActionZodSchema, { description: 'List of actions for the strategy' })
+// })
+
+//  const StrategiesZodSchema = z.object({
+//     strategies: z.array(StrategyZodSchema, { description: 'List of strategies' })
+// })
+
 export async function getPortfolioForNetwork(
     address: string,
     networkId: string
@@ -68,7 +116,14 @@ export async function getPortfolioVelcroV3(address: string): Promise<PortfolioFo
 }
 
 export const processAddress = async (
-    { address, getPortfolio, makePrompt, llmProcessor }: ProcessAddressProps = {
+    {
+        address,
+        getPortfolio,
+        makePrompt,
+        llmProcessor,
+        model,
+        llmOptionsOverride
+    }: ProcessAddressProps = {
         address: '0x69bfD720Dd188B8BB04C4b4D24442D3c15576D10',
         getPortfolio: getPortfolioVelcroV3,
         makePrompt: simplePrompt,
@@ -94,7 +149,7 @@ export const processAddress = async (
     }
 
     const prompt = await makePrompt({ portfolio })
-    const strategies = await llmProcessor({ prompt })
+    const strategies = await llmProcessor({ prompt, model, llmOptionsOverride })
 
     return {
         address,

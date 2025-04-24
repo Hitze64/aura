@@ -12,7 +12,8 @@ export const ActionGoogleSchema: Schema = {
         },
         description: {
             type: SchemaType.STRING,
-            description: 'Free text describing the action',
+            description:
+                'Free text describing the action concerning the related tokens, the platform to use and expected APY',
             nullable: false
         },
         platforms: {

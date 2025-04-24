@@ -21,7 +21,8 @@ export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessO
             generationConfig: {
                 responseMimeType: 'application/json',
                 responseSchema: StrategiesGoogleSchema
-            }
+            },
+            ...llmInput.llmOptionsOverride
         })
         const result = await aiModel.generateContent(llmInput.prompt)
         // console.log(JSON.stringify(result))

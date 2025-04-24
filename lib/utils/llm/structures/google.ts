@@ -52,7 +52,7 @@ export const ActionGoogleSchema: Schema = {
             nullable: false
         }
     },
-    required: ['tokens', 'description']
+    required: ['tokens', 'description', 'platforms', 'networks', 'operations', 'apy']
 }
 
 export const StrategyGoogleSchema: Schema = {

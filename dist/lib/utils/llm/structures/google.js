@@ -50,7 +50,7 @@ exports.ActionGoogleSchema = {
             nullable: false
         }
     },
-    required: ['tokens', 'description']
+    required: ['tokens', 'description', 'platforms', 'networks', 'operations', 'apy']
 };
 exports.StrategyGoogleSchema = {
     type: generative_ai_1.SchemaType.OBJECT,

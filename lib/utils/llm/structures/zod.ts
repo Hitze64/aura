@@ -7,7 +7,8 @@ export const ActionZodSchema = z.object({
             'Comma-separated list of symbols of the involved crypto currencies or tokens, for example: USDC, ETH'
     }),
     description: z.string({
-        description: 'Free text describing the action concerning the related tokens'
+        description:
+            'Free text describing the action concerning the related tokens, the platform to use and expected APY'
     }),
     platforms: z.array(
         z.string({

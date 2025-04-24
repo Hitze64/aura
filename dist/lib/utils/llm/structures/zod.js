@@ -8,7 +8,7 @@ exports.ActionZodSchema = zod_1.z.object({
         description: 'Comma-separated list of symbols of the involved crypto currencies or tokens, for example: USDC, ETH'
     }),
     description: zod_1.z.string({
-        description: 'Free text describing the action concerning the related tokens'
+        description: 'Free text describing the action concerning the related tokens, the platform to use and expected APY'
     }),
     platforms: zod_1.z.array(zod_1.z.string({
         description: 'DeFi platform name'

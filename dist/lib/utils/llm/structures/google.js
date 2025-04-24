@@ -13,7 +13,7 @@ exports.ActionGoogleSchema = {
         },
         description: {
             type: generative_ai_1.SchemaType.STRING,
-            description: 'Free text describing the action',
+            description: 'Free text describing the action concerning the related tokens, the platform to use and expected APY',
             nullable: false
         },
         platforms: {

@@ -20,7 +20,8 @@ async function callGemini(llmInput) {
             generationConfig: {
                 responseMimeType: 'application/json',
                 responseSchema: google_1.StrategiesGoogleSchema
-            }
+            },
+            ...llmInput.llmOptionsOverride
         });
         const result = await aiModel.generateContent(llmInput.prompt);
         // console.log(JSON.stringify(result))

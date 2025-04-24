@@ -30,7 +30,8 @@ async function callGrok(llmInput) {
                 },
                 { role: 'user', content: llmInput.prompt }
             ],
-            response_format: (0, zod_1.zodResponseFormat)(zod_2.StrategiesZodSchema, 'strategies')
+            response_format: (0, zod_1.zodResponseFormat)(zod_2.StrategiesZodSchema, 'strategies'),
+            ...llmInput.llmOptionsOverride
         });
         const outputContent = completion.choices[0].message.content || '{}';
         try {

@@ -10,9 +10,14 @@ exports.ActionZodSchema = zod_1.z.object({
     description: zod_1.z.string({
         description: 'Free text describing the action concerning the related tokens, the platform to use and expected APY'
     }),
-    platforms: zod_1.z.array(zod_1.z.string({
-        description: 'DeFi platform name'
-    }), { description: 'The DeFi platform(s) which is to be used for the action' }),
+    platforms: zod_1.z.array(zod_1.z.object({
+        name: zod_1.z.string({
+            description: 'DeFi platform name'
+        }),
+        url: zod_1.z.string({
+            description: 'Verified HTTPS URL of the DeFi platform'
+        })
+    }), { description: 'The DeFi platform(s) to be used for the action' }),
     networks: zod_1.z.array(zod_1.z.string({
         description: 'Lower-cased name of blockchain network'
     }), {

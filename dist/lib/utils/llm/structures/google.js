@@ -18,11 +18,22 @@ exports.ActionGoogleSchema = {
         },
         platforms: {
             type: generative_ai_1.SchemaType.ARRAY,
-            description: 'The DeFi platform(s) which is to be used for the action',
+            description: 'The DeFi platform(s) to be used for the action',
             items: {
-                type: generative_ai_1.SchemaType.STRING,
-                description: 'DeFi platform name',
-                nullable: false
+                type: generative_ai_1.SchemaType.OBJECT,
+                properties: {
+                    name: {
+                        type: generative_ai_1.SchemaType.STRING,
+                        description: 'DeFi platform name',
+                        nullable: false
+                    },
+                    url: {
+                        type: generative_ai_1.SchemaType.STRING,
+                        description: 'Verified HTTPS URL of the DeFi platform',
+                        nullable: false
+                    }
+                },
+                required: ['name', 'url']
             }
         },
         networks: {

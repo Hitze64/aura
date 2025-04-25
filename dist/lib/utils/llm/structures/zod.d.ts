@@ -2,21 +2,36 @@ import { z } from 'zod';
 export declare const ActionZodSchema: z.ZodObject<{
     tokens: z.ZodString;
     description: z.ZodString;
-    platforms: z.ZodArray<z.ZodString, "many">;
+    platforms: z.ZodArray<z.ZodObject<{
+        name: z.ZodString;
+        url: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        name: string;
+        url: string;
+    }, {
+        name: string;
+        url: string;
+    }>, "many">;
     networks: z.ZodArray<z.ZodString, "many">;
     operations: z.ZodArray<z.ZodEnum<["staking", "lending", "borrowing", "liquidity provision", "yield farming", "governance farming", "bridging"]>, "many">;
     apy: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     tokens: string;
     description: string;
-    platforms: string[];
+    platforms: {
+        name: string;
+        url: string;
+    }[];
     networks: string[];
     operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
     apy: string;
 }, {
     tokens: string;
     description: string;
-    platforms: string[];
+    platforms: {
+        name: string;
+        url: string;
+    }[];
     networks: string[];
     operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
     apy: string;
@@ -27,21 +42,36 @@ export declare const StrategyZodSchema: z.ZodObject<{
     actions: z.ZodArray<z.ZodObject<{
         tokens: z.ZodString;
         description: z.ZodString;
-        platforms: z.ZodArray<z.ZodString, "many">;
+        platforms: z.ZodArray<z.ZodObject<{
+            name: z.ZodString;
+            url: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            url: string;
+        }, {
+            name: string;
+            url: string;
+        }>, "many">;
         networks: z.ZodArray<z.ZodString, "many">;
         operations: z.ZodArray<z.ZodEnum<["staking", "lending", "borrowing", "liquidity provision", "yield farming", "governance farming", "bridging"]>, "many">;
         apy: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         tokens: string;
         description: string;
-        platforms: string[];
+        platforms: {
+            name: string;
+            url: string;
+        }[];
         networks: string[];
         operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
         apy: string;
     }, {
         tokens: string;
         description: string;
-        platforms: string[];
+        platforms: {
+            name: string;
+            url: string;
+        }[];
         networks: string[];
         operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
         apy: string;
@@ -52,7 +82,10 @@ export declare const StrategyZodSchema: z.ZodObject<{
     actions: {
         tokens: string;
         description: string;
-        platforms: string[];
+        platforms: {
+            name: string;
+            url: string;
+        }[];
         networks: string[];
         operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
         apy: string;
@@ -63,7 +96,10 @@ export declare const StrategyZodSchema: z.ZodObject<{
     actions: {
         tokens: string;
         description: string;
-        platforms: string[];
+        platforms: {
+            name: string;
+            url: string;
+        }[];
         networks: string[];
         operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
         apy: string;
@@ -76,21 +112,36 @@ export declare const StrategiesZodSchema: z.ZodObject<{
         actions: z.ZodArray<z.ZodObject<{
             tokens: z.ZodString;
             description: z.ZodString;
-            platforms: z.ZodArray<z.ZodString, "many">;
+            platforms: z.ZodArray<z.ZodObject<{
+                name: z.ZodString;
+                url: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                url: string;
+            }, {
+                name: string;
+                url: string;
+            }>, "many">;
             networks: z.ZodArray<z.ZodString, "many">;
             operations: z.ZodArray<z.ZodEnum<["staking", "lending", "borrowing", "liquidity provision", "yield farming", "governance farming", "bridging"]>, "many">;
             apy: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             tokens: string;
             description: string;
-            platforms: string[];
+            platforms: {
+                name: string;
+                url: string;
+            }[];
             networks: string[];
             operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
             apy: string;
         }, {
             tokens: string;
             description: string;
-            platforms: string[];
+            platforms: {
+                name: string;
+                url: string;
+            }[];
             networks: string[];
             operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
             apy: string;
@@ -101,7 +152,10 @@ export declare const StrategiesZodSchema: z.ZodObject<{
         actions: {
             tokens: string;
             description: string;
-            platforms: string[];
+            platforms: {
+                name: string;
+                url: string;
+            }[];
             networks: string[];
             operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
             apy: string;
@@ -112,7 +166,10 @@ export declare const StrategiesZodSchema: z.ZodObject<{
         actions: {
             tokens: string;
             description: string;
-            platforms: string[];
+            platforms: {
+                name: string;
+                url: string;
+            }[];
             networks: string[];
             operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
             apy: string;
@@ -125,7 +182,10 @@ export declare const StrategiesZodSchema: z.ZodObject<{
         actions: {
             tokens: string;
             description: string;
-            platforms: string[];
+            platforms: {
+                name: string;
+                url: string;
+            }[];
             networks: string[];
             operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
             apy: string;
@@ -138,7 +198,10 @@ export declare const StrategiesZodSchema: z.ZodObject<{
         actions: {
             tokens: string;
             description: string;
-            platforms: string[];
+            platforms: {
+                name: string;
+                url: string;
+            }[];
             networks: string[];
             operations: ("staking" | "lending" | "borrowing" | "liquidity provision" | "yield farming" | "governance farming" | "bridging")[];
             apy: string;

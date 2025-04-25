@@ -18,11 +18,22 @@ export const ActionGoogleSchema: Schema = {
         },
         platforms: {
             type: SchemaType.ARRAY,
-            description: 'The DeFi platform(s) which is to be used for the action',
+            description: 'The DeFi platform(s) to be used for the action',
             items: {
-                type: SchemaType.STRING,
-                description: 'DeFi platform name',
-                nullable: false
+                type: SchemaType.OBJECT,
+                properties: {
+                    name: {
+                        type: SchemaType.STRING,
+                        description: 'DeFi platform name',
+                        nullable: false
+                    },
+                    url: {
+                        type: SchemaType.STRING,
+                        description: 'Verified HTTPS URL of the DeFi platform',
+                        nullable: false
+                    }
+                },
+                required: ['name', 'url']
             }
         },
         networks: {

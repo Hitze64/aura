@@ -11,10 +11,15 @@ export const ActionZodSchema = z.object({
             'Free text describing the action concerning the related tokens, the platform to use and expected APY'
     }),
     platforms: z.array(
-        z.string({
-            description: 'DeFi platform name'
+        z.object({
+            name: z.string({
+                description: 'DeFi platform name'
+            }),
+            url: z.string({
+                description: 'Verified HTTPS URL of the DeFi platform'
+            })
         }),
-        { description: 'The DeFi platform(s) which is to be used for the action' }
+        { description: 'The DeFi platform(s) to be used for the action' }
     ),
     networks: z.array(
         z.string({

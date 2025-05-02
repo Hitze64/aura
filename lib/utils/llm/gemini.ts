@@ -14,6 +14,8 @@ export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessO
     let output = null
     let error = null
     const model = llmInput.model || GEMINI_MODELS.gemini20flashExp
+    let inputTokens: number | undefined
+    let outputTokens: number | undefined
 
     try {
         const aiModel = genAI.getGenerativeModel({
@@ -28,6 +30,8 @@ export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessO
         // console.log(JSON.stringify(result))
 
         const content = result.response.text()
+        inputTokens = result.response.usageMetadata?.promptTokenCount || 0
+        outputTokens = result.response.usageMetadata?.candidatesTokenCount || 0
 
         try {
             output = JSON.parse(content || '[]') as Strategy[]
@@ -46,6 +50,8 @@ export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessO
             model
         },
         response: output,
+        inputTokens: inputTokens || 0,
+        outputTokens: outputTokens || 0,
         error
     }
 }

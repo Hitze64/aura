@@ -47,7 +47,9 @@ const mockedLlmOutput: LlmProcessOutput = {
             name: 'Example USDC strategy name',
             risk: StrategyRisk.LOW
         }
-    ]
+    ],
+    inputTokens: 0,
+    outputTokens: 0
 }
 
 jest.mock('ambire-common/dist/src/consts/networks', () => {

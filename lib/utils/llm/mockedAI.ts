@@ -43,6 +43,8 @@ export async function llmMockProcess({ prompt }: LlmProcessProps): Promise<LlmPr
                 name: 'L2 Yield Farming',
                 risk: StrategyRisk.HIGH
             }
-        ]
+        ],
+        inputTokens: 0,
+        outputTokens: 0
     }
 }

@@ -94,7 +94,9 @@ export const processAddress = async (
                         provider: 'local',
                         model: 'local'
                     },
-                    response: EMPTY_PORTFOLIO_STRATEGIES
+                    response: EMPTY_PORTFOLIO_STRATEGIES,
+                    inputTokens: 0,
+                    outputTokens: 0
                 }
             ]
         }

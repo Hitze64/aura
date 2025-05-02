@@ -14,6 +14,8 @@ async function callGemini(llmInput) {
     let output = null;
     let error = null;
     const model = llmInput.model || exports.GEMINI_MODELS.gemini20flashExp;
+    let inputTokens;
+    let outputTokens;
     try {
         const aiModel = genAI.getGenerativeModel({
             model,
@@ -26,6 +28,8 @@ async function callGemini(llmInput) {
         const result = await aiModel.generateContent(llmInput.prompt);
         // console.log(JSON.stringify(result))
         const content = result.response.text();
+        inputTokens = result.response.usageMetadata?.promptTokenCount || 0;
+        outputTokens = result.response.usageMetadata?.candidatesTokenCount || 0;
         try {
             output = JSON.parse(content || '[]');
         }
@@ -44,6 +48,8 @@ async function callGemini(llmInput) {
             model
         },
         response: output,
+        inputTokens: inputTokens || 0,
+        outputTokens: outputTokens || 0,
         error
     };
 }

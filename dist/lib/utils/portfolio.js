@@ -64,7 +64,9 @@ const processAddress = async ({ address, getPortfolio, makePrompt, llmProcessor,
                         provider: 'local',
                         model: 'local'
                     },
-                    response: strategies_1.EMPTY_PORTFOLIO_STRATEGIES
+                    response: strategies_1.EMPTY_PORTFOLIO_STRATEGIES,
+                    inputTokens: 0,
+                    outputTokens: 0
                 }
             ]
         };

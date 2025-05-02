@@ -44,7 +44,9 @@ async function llmMockProcess({ prompt }) {
                 name: 'L2 Yield Farming',
                 risk: types_1.StrategyRisk.HIGH
             }
-        ]
+        ],
+        inputTokens: 0,
+        outputTokens: 0
     };
 }
 //# sourceMappingURL=mockedAI.js.map

@@ -19,6 +19,8 @@ async function callGrok(llmInput) {
     let output = null;
     let error = null;
     const model = llmInput.model || exports.XAI_MODELS.grok3latest;
+    let inputTokens;
+    let outputTokens;
     try {
         const completion = await apiClient.chat.completions.create({
             model,
@@ -34,6 +36,8 @@ async function callGrok(llmInput) {
             ...llmInput.llmOptionsOverride
         });
         const outputContent = completion.choices[0].message.content || '{}';
+        inputTokens = completion.usage?.prompt_tokens || 0;
+        outputTokens = completion.usage?.completion_tokens || 0;
         try {
             const parsed = JSON.parse(outputContent);
             output = parsed.strategies || [];
@@ -53,6 +57,8 @@ async function callGrok(llmInput) {
             model
         },
         response: output,
+        inputTokens: inputTokens || 0,
+        outputTokens: outputTokens || 0,
         error
     };
 }

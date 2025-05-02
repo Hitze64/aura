@@ -55,6 +55,8 @@ export type LlmProcessOutput = {
         model: string
     }
     response: Strategy[] | null
+    inputTokens: number
+    outputTokens: number
     error?: string | null
 }
 

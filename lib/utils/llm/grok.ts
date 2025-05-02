@@ -18,6 +18,8 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
     let output = null
     let error = null
     const model = llmInput.model || XAI_MODELS.grok3latest
+    let inputTokens: number | undefined
+    let outputTokens: number | undefined
 
     try {
         const completion = await apiClient.chat.completions.create({
@@ -36,6 +38,8 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
         })
 
         const outputContent = completion.choices[0].message.content || '{}'
+        inputTokens = completion.usage?.prompt_tokens || 0
+        outputTokens = completion.usage?.completion_tokens || 0
 
         try {
             const parsed = JSON.parse(outputContent) as { strategies: Strategy[] }
@@ -55,6 +59,8 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
             model
         },
         response: output,
+        inputTokens: inputTokens || 0,
+        outputTokens: outputTokens || 0,
         error
     }
 }

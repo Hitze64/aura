@@ -47,6 +47,8 @@ export type LlmProcessProps = {
     prompt: string
     model?: string
     llmOptionsOverride?: { [x: string]: any }
+    timeout?: number
+    timeoutMsg?: string
 }
 
 export type LlmProcessOutput = {

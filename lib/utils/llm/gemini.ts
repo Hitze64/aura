@@ -2,6 +2,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai'
 import { LlmProcessOutput, LlmProcessProps, Strategy } from '../../types'
 import { stringifyError } from '../errors'
 import { StrategiesGoogleSchema } from './structures/google'
+import { timeoutPromise } from '../timing'
 
 export const GEMINI_MODELS = {
     gemini20flashExp: 'gemini-2.0-flash-exp',
@@ -26,7 +27,11 @@ export async function callGemini(llmInput: LlmProcessProps): Promise<LlmProcessO
             },
             ...llmInput.llmOptionsOverride
         })
-        const result = await aiModel.generateContent(llmInput.prompt)
+        const result = await timeoutPromise(
+            aiModel.generateContent(llmInput.prompt),
+            llmInput.timeout || 60,
+            llmInput.timeoutMsg
+        )
         // console.log(JSON.stringify(result))
 
         const content = result.response.text()

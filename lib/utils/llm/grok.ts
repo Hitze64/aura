@@ -3,6 +3,7 @@ import { zodResponseFormat } from 'openai/helpers/zod'
 import { LlmProcessOutput, LlmProcessProps, Strategy } from '../../types'
 import { StrategiesZodSchema } from './structures/zod'
 import { stringifyError } from '../errors'
+import { timeoutPromise } from '../timing'
 
 export const XAI_MODELS = {
     grok2latest: 'grok-2-latest',
@@ -22,20 +23,24 @@ export async function callGrok(llmInput: LlmProcessProps): Promise<LlmProcessOut
     let outputTokens: number | undefined
 
     try {
-        const completion = await apiClient.chat.completions.create({
-            model,
-            store: true,
-            messages: [
-                {
-                    role: 'system',
-                    content:
-                        'You are an expert in cryptocurrencies, DeFi applications and their use cases. Return output in JSON format.'
-                },
-                { role: 'user', content: llmInput.prompt }
-            ],
-            response_format: zodResponseFormat(StrategiesZodSchema, 'strategies'),
-            ...llmInput.llmOptionsOverride
-        })
+        const completion = await timeoutPromise(
+            apiClient.chat.completions.create({
+                model,
+                store: true,
+                messages: [
+                    {
+                        role: 'system',
+                        content:
+                            'You are an expert in cryptocurrencies, DeFi applications and their use cases. Return output in JSON format.'
+                    },
+                    { role: 'user', content: llmInput.prompt }
+                ],
+                response_format: zodResponseFormat(StrategiesZodSchema, 'strategies'),
+                ...llmInput.llmOptionsOverride
+            }),
+            llmInput.timeout || 60,
+            llmInput.timeoutMsg
+        )
 
         const outputContent = completion.choices[0].message.content || '{}'
         inputTokens = completion.usage?.prompt_tokens || 0

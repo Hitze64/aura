@@ -7,6 +7,7 @@ const openai_1 = tslib_1.__importDefault(require("openai"));
 const zod_1 = require("openai/helpers/zod");
 const zod_2 = require("./structures/zod");
 const errors_1 = require("../errors");
+const timing_1 = require("../timing");
 exports.XAI_MODELS = {
     grok2latest: 'grok-2-latest',
     grok3latest: 'grok-3-latest'
@@ -22,7 +23,7 @@ async function callGrok(llmInput) {
     let inputTokens;
     let outputTokens;
     try {
-        const completion = await apiClient.chat.completions.create({
+        const completion = await (0, timing_1.timeoutPromise)(apiClient.chat.completions.create({
             model,
             store: true,
             messages: [
@@ -34,7 +35,7 @@ async function callGrok(llmInput) {
             ],
             response_format: (0, zod_1.zodResponseFormat)(zod_2.StrategiesZodSchema, 'strategies'),
             ...llmInput.llmOptionsOverride
-        });
+        }), llmInput.timeout || 60, llmInput.timeoutMsg);
         const outputContent = completion.choices[0].message.content || '{}';
         inputTokens = completion.usage?.prompt_tokens || 0;
         outputTokens = completion.usage?.completion_tokens || 0;

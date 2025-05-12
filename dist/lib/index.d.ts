@@ -7,4 +7,5 @@ export * from './utils/llm/structures';
 export * from './utils/prompts';
 export * from './utils/strategies';
 export * from './utils/errors';
+export * from './utils/timing';
 //# sourceMappingURL=index.d.ts.map

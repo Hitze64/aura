@@ -5,6 +5,7 @@ exports.callGemini = callGemini;
 const generative_ai_1 = require("@google/generative-ai");
 const errors_1 = require("../errors");
 const google_1 = require("./structures/google");
+const timing_1 = require("../timing");
 exports.GEMINI_MODELS = {
     gemini20flashExp: 'gemini-2.0-flash-exp',
     gemini25proPreview: 'gemini-2.5-pro-preview-03-25'
@@ -25,7 +26,7 @@ async function callGemini(llmInput) {
             },
             ...llmInput.llmOptionsOverride
         });
-        const result = await aiModel.generateContent(llmInput.prompt);
+        const result = await (0, timing_1.timeoutPromise)(aiModel.generateContent(llmInput.prompt), llmInput.timeout || 60, llmInput.timeoutMsg);
         // console.log(JSON.stringify(result))
         const content = result.response.text();
         inputTokens = result.response.usageMetadata?.promptTokenCount || 0;

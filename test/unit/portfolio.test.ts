@@ -19,7 +19,7 @@ const mockedNetworkPortfolioResult: NetworkPortfolioLibResponse = {
         {
             symbol: 'USDC',
             address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-            networkId: 'ethereum',
+            chainId: 1n,
             decimals: 6,
             amount: 50000000n,
             priceIn: [
@@ -55,7 +55,7 @@ const mockedLlmOutput: LlmProcessOutput = {
 jest.mock('ambire-common/dist/src/consts/networks', () => {
     const actual = jest.requireActual('ambire-common/dist/src/consts/networks')
     return {
-        networks: actual.networks.filter((n: any) => ['ethereum'].includes(n.id))
+        networks: actual.networks.filter((n: any) => ['Ethereum'].includes(n.name))
     }
 })
 
@@ -75,7 +75,7 @@ describe('Portfolio unit tests', () => {
     })
 
     test('should successfully get portfolio for address on ethereum', async () => {
-        const res = await getPortfolioForNetwork(TEST_WALLET, 'ethereum')
+        const res = await getPortfolioForNetwork(TEST_WALLET, 'Ethereum')
 
         expect(res).toHaveProperty('tokens')
         expect(res.tokens).toHaveLength(1)
@@ -88,13 +88,13 @@ describe('Portfolio unit tests', () => {
         expect(res).toHaveLength(1)
         expect(res[0]).toHaveProperty('network')
         expect(res[0]).toHaveProperty('tokens')
-        expect(res[0].network).toEqual('ethereum')
+        expect(res[0].network).toEqual('Ethereum')
         expect(res[0].tokens).toHaveLength(1)
 
         const mockedLibToken = mockedNetworkPortfolioResult.tokens[0]
         expect(res[0].tokens[0].symbol).toEqual(mockedLibToken.symbol)
         expect(res[0].tokens[0].address).toEqual(mockedLibToken.address)
-        expect(res[0].tokens[0].network).toEqual(mockedLibToken.networkId)
+        expect(res[0].tokens[0].network).toEqual('Ethereum')
 
         const expectedBalance =
             Number(mockedLibToken.amount) / Math.pow(10, mockedLibToken.decimals)

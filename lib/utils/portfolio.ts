@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
 import { networks } from 'ambire-common/dist/src/consts/networks'
+import { Network } from 'ambire-common/dist/src/interfaces/network'
 import { getRpcProvider } from 'ambire-common/dist/src/services/provider/getRpcProvider'
 import { Portfolio } from 'ambire-common/dist/src/libs/portfolio'
 import { llmMockProcess } from './llm/mockedAI'
@@ -14,9 +15,9 @@ import {
 
 export async function getPortfolioForNetwork(
     address: string,
-    networkId: string
+    networkId: string | bigint
 ): Promise<NetworkPortfolioLibResponse> {
-    const network = networks.find((n: any) => n.id === networkId)
+    const network = networks.find((n: Network) => n.chainId === networkId || n.name === networkId)
     if (!network) throw new Error(`Failed to find ${networkId} in configured networks`)
 
     const provider = getRpcProvider(network.rpcUrls, network.chainId)
@@ -34,13 +35,14 @@ export async function getPortfolioVelcroV3(address: string): Promise<PortfolioFo
     const output: PortfolioForNetwork[] = []
 
     const responses = await Promise.all(
-        networks.map((network) => getPortfolioForNetwork(address, network.id))
+        networks.map((network) => getPortfolioForNetwork(address, network.chainId))
     )
 
     for (const resp of responses) {
         const tokens = resp.tokens
             .filter((t) => t.amount > 0n)
             .map((t) => {
+                const network = networks.find((n) => n.chainId === t.chainId) as Network
                 const balance = Number(t.amount) / Math.pow(10, t.decimals)
                 const priceUSD = (t.priceIn.find((p) => p.baseCurrency === 'usd') || { price: 0 })
                     .price
@@ -49,7 +51,7 @@ export async function getPortfolioVelcroV3(address: string): Promise<PortfolioFo
                     symbol: t.symbol,
                     balance,
                     balanceUSD: balance * priceUSD,
-                    network: t.networkId,
+                    network: network.name,
                     address: t.address
                 }
             })

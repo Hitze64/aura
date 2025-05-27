@@ -1,5 +1,5 @@
 import { TokenResult } from 'ambire-common/dist/src/libs/portfolio/interfaces';
-export type PortfolioLibToken = Pick<TokenResult, 'symbol' | 'address' | 'networkId' | 'decimals' | 'amount' | 'priceIn'>;
+export type PortfolioLibToken = Pick<TokenResult, 'symbol' | 'address' | 'chainId' | 'decimals' | 'amount' | 'priceIn'>;
 export type NetworkPortfolioLibResponse = {
     tokens: PortfolioLibToken[];
 };

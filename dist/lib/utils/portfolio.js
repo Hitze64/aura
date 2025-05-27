@@ -12,7 +12,7 @@ const mockedAI_1 = require("./llm/mockedAI");
 const prompts_1 = require("./prompts");
 const strategies_1 = require("./strategies");
 async function getPortfolioForNetwork(address, networkId) {
-    const network = networks_1.networks.find((n) => n.id === networkId);
+    const network = networks_1.networks.find((n) => n.chainId === networkId || n.name === networkId);
     if (!network)
         throw new Error(`Failed to find ${networkId} in configured networks`);
     const provider = (0, getRpcProvider_1.getRpcProvider)(network.rpcUrls, network.chainId);
@@ -21,11 +21,12 @@ async function getPortfolioForNetwork(address, networkId) {
 }
 async function getPortfolioVelcroV3(address) {
     const output = [];
-    const responses = await Promise.all(networks_1.networks.map((network) => getPortfolioForNetwork(address, network.id)));
+    const responses = await Promise.all(networks_1.networks.map((network) => getPortfolioForNetwork(address, network.chainId)));
     for (const resp of responses) {
         const tokens = resp.tokens
             .filter((t) => t.amount > 0n)
             .map((t) => {
+            const network = networks_1.networks.find((n) => n.chainId === t.chainId);
             const balance = Number(t.amount) / Math.pow(10, t.decimals);
             const priceUSD = (t.priceIn.find((p) => p.baseCurrency === 'usd') || { price: 0 })
                 .price;
@@ -33,7 +34,7 @@ async function getPortfolioVelcroV3(address) {
                 symbol: t.symbol,
                 balance,
                 balanceUSD: balance * priceUSD,
-                network: t.networkId,
+                network: network.name,
                 address: t.address
             };
         });

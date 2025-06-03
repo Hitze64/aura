@@ -11,17 +11,17 @@ const portfolio_1 = require("ambire-common/dist/src/libs/portfolio");
 const mockedAI_1 = require("./llm/mockedAI");
 const prompts_1 = require("./prompts");
 const strategies_1 = require("./strategies");
-async function getPortfolioForNetwork(address, networkId) {
+async function getPortfolioForNetwork(address, networkId, customFetch) {
     const network = networks_1.networks.find((n) => n.chainId === networkId || n.name === networkId);
     if (!network)
         throw new Error(`Failed to find ${networkId} in configured networks`);
     const provider = (0, getRpcProvider_1.getRpcProvider)(network.rpcUrls, network.chainId);
-    const portfolio = new portfolio_1.Portfolio(node_fetch_1.default, provider, network, 'https://relayer.ambire.com/velcro-v3');
+    const portfolio = new portfolio_1.Portfolio(customFetch || node_fetch_1.default, provider, network, 'https://relayer.ambire.com/velcro-v3');
     return portfolio.get(address, { baseCurrency: 'usd' });
 }
-async function getPortfolioVelcroV3(address) {
+async function getPortfolioVelcroV3(address, customFetch) {
     const output = [];
-    const responses = await Promise.all(networks_1.networks.map((network) => getPortfolioForNetwork(address, network.chainId)));
+    const responses = await Promise.all(networks_1.networks.map((network) => getPortfolioForNetwork(address, network.chainId, customFetch)));
     for (const resp of responses) {
         const tokens = resp.tokens
             .filter((t) => t.amount > 0n)

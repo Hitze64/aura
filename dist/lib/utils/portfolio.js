@@ -26,7 +26,6 @@ async function getPortfolioVelcroV3(address, customFetch) {
         const tokens = resp.tokens
             .filter((t) => t.amount > 0n)
             .map((t) => {
-            const network = networks_1.networks.find((n) => n.chainId === t.chainId);
             const balance = Number(t.amount) / Math.pow(10, t.decimals);
             const priceUSD = (t.priceIn.find((p) => p.baseCurrency === 'usd') || { price: 0 })
                 .price;
@@ -34,15 +33,22 @@ async function getPortfolioVelcroV3(address, customFetch) {
                 symbol: t.symbol,
                 balance,
                 balanceUSD: balance * priceUSD,
-                network: network.name,
                 address: t.address
             };
         });
         if (!tokens.length) {
             continue;
         }
+        const matchedNetwork = networks_1.networks.find((n) => n.chainId === resp.tokens[0].chainId);
+        const networkInfo = {
+            name: matchedNetwork.name,
+            chainId: matchedNetwork.chainId.toString(),
+            platformId: matchedNetwork.platformId,
+            explorerUrl: matchedNetwork.explorerUrl,
+            iconUrls: matchedNetwork.iconUrls || []
+        };
         output.push({
-            network: tokens[0].network,
+            network: networkInfo,
             tokens
         });
     }

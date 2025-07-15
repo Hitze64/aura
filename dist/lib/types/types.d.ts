@@ -8,10 +8,16 @@ export type PortfolioToken = {
     balance: number;
     balanceUSD: number;
     symbol: string;
-    network: string;
+};
+export type PortfolioNetworkInfo = {
+    name: string;
+    chainId: string;
+    platformId: string;
+    explorerUrl: string;
+    iconUrls: string[];
 };
 export type PortfolioForNetwork = {
-    network: string;
+    network: PortfolioNetworkInfo;
     tokens: PortfolioToken[];
 };
 export declare enum StrategyRisk {

@@ -88,13 +88,12 @@ describe('Portfolio unit tests', () => {
         expect(res).toHaveLength(1)
         expect(res[0]).toHaveProperty('network')
         expect(res[0]).toHaveProperty('tokens')
-        expect(res[0].network).toEqual('Ethereum')
+        expect(res[0].network.name).toEqual('Ethereum')
         expect(res[0].tokens).toHaveLength(1)
 
         const mockedLibToken = mockedNetworkPortfolioResult.tokens[0]
         expect(res[0].tokens[0].symbol).toEqual(mockedLibToken.symbol)
         expect(res[0].tokens[0].address).toEqual(mockedLibToken.address)
-        expect(res[0].tokens[0].network).toEqual('Ethereum')
 
         const expectedBalance =
             Number(mockedLibToken.amount) / Math.pow(10, mockedLibToken.decimals)

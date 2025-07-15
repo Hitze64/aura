@@ -11,7 +11,8 @@ import {
     PortfolioForNetwork,
     ProcessAddressProps,
     AuraResponse_01,
-    NetworkPortfolioLibResponse
+    NetworkPortfolioLibResponse,
+    PortfolioNetworkInfo
 } from '../types'
 
 export async function getPortfolioForNetwork(
@@ -47,7 +48,6 @@ export async function getPortfolioVelcroV3(
         const tokens = resp.tokens
             .filter((t) => t.amount > 0n)
             .map((t) => {
-                const network = networks.find((n) => n.chainId === t.chainId) as Network
                 const balance = Number(t.amount) / Math.pow(10, t.decimals)
                 const priceUSD = (t.priceIn.find((p) => p.baseCurrency === 'usd') || { price: 0 })
                     .price
@@ -56,7 +56,6 @@ export async function getPortfolioVelcroV3(
                     symbol: t.symbol,
                     balance,
                     balanceUSD: balance * priceUSD,
-                    network: network.name,
                     address: t.address
                 }
             })
@@ -65,8 +64,17 @@ export async function getPortfolioVelcroV3(
             continue
         }
 
+        const matchedNetwork = networks.find((n) => n.chainId === resp.tokens[0].chainId) as Network
+        const networkInfo: PortfolioNetworkInfo = {
+            name: matchedNetwork.name,
+            chainId: matchedNetwork.chainId.toString(),
+            platformId: matchedNetwork.platformId,
+            explorerUrl: matchedNetwork.explorerUrl,
+            iconUrls: matchedNetwork.iconUrls || []
+        }
+
         output.push({
-            network: tokens[0].network,
+            network: networkInfo,
             tokens
         })
     }

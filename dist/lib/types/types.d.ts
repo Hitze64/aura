@@ -36,6 +36,7 @@ export type StrategyAction = {
     networks?: string[];
     operations?: string[];
     apy?: string;
+    flags?: string[];
 };
 export type Strategy = {
     name: string;

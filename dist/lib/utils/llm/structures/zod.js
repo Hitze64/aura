@@ -28,6 +28,11 @@ exports.ActionZodSchema = zod_1.z.object({
     }),
     apy: zod_1.z.string({
         description: 'The annual yield that can be expected from this action. Example values: 3%, 5%, 8-10%'
+    }),
+    flags: zod_1.z.array(zod_1.z.string({
+        description: 'Flag name (instructions for possible values in prompt)'
+    }), {
+        description: 'The flags for the action. Optional (array could be empty)'
     })
 });
 exports.StrategyZodSchema = zod_1.z.object({

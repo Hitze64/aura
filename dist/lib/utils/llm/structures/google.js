@@ -59,9 +59,18 @@ exports.ActionGoogleSchema = {
             type: generative_ai_1.SchemaType.STRING,
             description: 'The annual yield that can be expected from this action. Example values: 3%, 5%, 8-10%',
             nullable: false
+        },
+        flags: {
+            type: generative_ai_1.SchemaType.ARRAY,
+            description: 'The flags for the action',
+            items: {
+                type: generative_ai_1.SchemaType.STRING,
+                description: 'Flag name (instructions for possible values in prompt)',
+                nullable: false
+            }
         }
     },
-    required: ['tokens', 'description', 'platforms', 'networks', 'operations', 'apy']
+    required: ['tokens', 'description', 'platforms', 'networks', 'operations', 'apy', 'flags']
 };
 exports.StrategyGoogleSchema = {
     type: generative_ai_1.SchemaType.OBJECT,

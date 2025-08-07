@@ -36,7 +36,15 @@ export const ActionZodSchema = z.object({
     apy: z.string({
         description:
             'The annual yield that can be expected from this action. Example values: 3%, 5%, 8-10%'
-    })
+    }),
+    flags: z.array(
+        z.string({
+            description: 'Flag name (instructions for possible values in prompt)'
+        }),
+        {
+            description: 'The flags for the action. Optional (array could be empty)'
+        }
+    )
 })
 
 export const StrategyZodSchema = z.object({

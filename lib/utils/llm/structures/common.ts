@@ -7,5 +7,7 @@ export const ACTION_OPERATION_TYPES = [
     'liquidity provision',
     'yield farming',
     'governance farming',
-    'bridging'
+    'bridging',
+    'holding',
+    'swapping'
 ] as const
